@@ -3,11 +3,14 @@ import { StyleSheet, Platform } from 'react-native';
 import { Pedometer } from 'expo-sensors';
 
 import { Text, View } from '@/components/Themed';
+import MewniePet, { MewnieMood } from '@/components/MewniePet';
+import { useStepGoal } from '@/contexts/StepGoalContext';
 
 export default function HomeScreen() {
   const [isPedometerAvailable, setIsPedometerAvailable] = useState<string>('checking');
   const [todaySteps, setTodaySteps] = useState<number>(0);
   const [currentSteps, setCurrentSteps] = useState<number>(0);
+  const { stepGoal } = useStepGoal();
 
   useEffect(() => {
     let subscription: ReturnType<typeof Pedometer.watchStepCount> | null = null;
@@ -49,32 +52,52 @@ export default function HomeScreen() {
   }, []);
 
   const totalSteps = todaySteps + currentSteps;
+  const progressPercent = Math.min((totalSteps / stepGoal) * 100, 100);
 
-  // Determine pet mood based on steps
-  const getPetMood = () => {
-    if (totalSteps >= 10000) return { emoji: '😸', text: 'Energetic!' };
-    if (totalSteps >= 5000) return { emoji: '😺', text: 'Happy' };
-    if (totalSteps >= 2000) return { emoji: '🐱', text: 'Content' };
-    return { emoji: '😿', text: 'Sleepy' };
+  // Determine pet mood based on progress towards goal (3 states)
+  const getMewnieMood = (): { mood: MewnieMood; text: string } => {
+    if (progressPercent >= 100) return { mood: 'happy', text: 'Goal Reached! 🎉' };
+    if (progressPercent >= 50) return { mood: 'neutral', text: 'Halfway there!' };
+    return { mood: 'tired', text: 'Let\'s get moving!' };
   };
 
-  const petMood = getPetMood();
+  const { mood, text } = getMewnieMood();
 
   return (
     <View style={styles.container}>
       {/* Mewnie Pet Container */}
       <View style={styles.petContainer}>
-        <View style={styles.petPlaceholder}>
-          <Text style={styles.petEmoji}>{petMood.emoji}</Text>
-          <Text style={styles.placeholderText}>Mewnie</Text>
-          <Text style={styles.moodText}>{petMood.text}</Text>
-        </View>
+        <MewniePet mood={mood} size={180} />
+        <Text style={styles.placeholderText}>Mewnie</Text>
+        <Text style={styles.moodText}>{text}</Text>
       </View>
 
       {/* Steps Display */}
       <View style={styles.stepsContainer}>
         <Text style={styles.stepsLabel}>Today's Steps</Text>
         <Text style={styles.stepsCount}>{totalSteps.toLocaleString()}</Text>
+
+        {/* Progress Bar */}
+        <View style={styles.progressContainer}>
+          <View style={styles.progressBar}>
+            <View
+              style={[
+                styles.progressFill,
+                { width: `${progressPercent}%` },
+                progressPercent >= 100 && styles.progressComplete
+              ]}
+            />
+          </View>
+          <View style={styles.progressLabels}>
+            <Text style={styles.progressText}>
+              {Math.round(progressPercent)}%
+            </Text>
+            <Text style={styles.goalText}>
+              Goal: {stepGoal.toLocaleString()}
+            </Text>
+          </View>
+        </View>
+
         {isPedometerAvailable === 'false' && (
           <Text style={styles.unavailableText}>
             Pedometer not available on this device
@@ -86,8 +109,6 @@ export default function HomeScreen() {
           </Text>
         )}
       </View>
-
-
     </View>
   );
 }
@@ -105,24 +126,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  petPlaceholder: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    borderWidth: 3,
-    borderColor: '#ccc',
-    borderStyle: 'dashed',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-  },
-  petEmoji: {
-    fontSize: 64,
-  },
   placeholderText: {
     fontSize: 18,
     fontWeight: '600',
-    marginTop: 8,
+    marginTop: 12,
     color: '#888',
   },
   moodText: {
@@ -147,10 +154,43 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#4A90D9',
   },
+  progressContainer: {
+    width: '100%',
+    marginTop: 16,
+    paddingHorizontal: 10,
+  },
+  progressBar: {
+    height: 12,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 6,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: '#4A90D9',
+    borderRadius: 6,
+  },
+  progressComplete: {
+    backgroundColor: '#4CAF50',
+  },
+  progressLabels: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 8,
+  },
+  progressText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#4A90D9',
+  },
+  goalText: {
+    fontSize: 14,
+    color: '#888',
+  },
   unavailableText: {
     fontSize: 12,
     color: '#E53935',
-    marginTop: 8,
+    marginTop: 12,
   },
   noteText: {
     fontSize: 11,
@@ -158,5 +198,4 @@ const styles = StyleSheet.create({
     marginTop: 8,
     textAlign: 'center',
   },
-
 });
