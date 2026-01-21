@@ -4,6 +4,7 @@ import { Pedometer } from 'expo-sensors';
 
 import { Text, View } from '@/components/Themed';
 import MewniePet, { MewnieMood } from '@/components/MewniePet';
+import EnvironmentBackground from '@/components/EnvironmentBackground';
 import { useStepGoal } from '@/contexts/StepGoalContext';
 
 export default function HomeScreen() {
@@ -64,52 +65,54 @@ export default function HomeScreen() {
   const { mood, text } = getMewnieMood();
 
   return (
-    <View style={styles.container}>
-      {/* Mewnie Pet Container */}
-      <View style={styles.petContainer}>
-        <MewniePet mood={mood} size={180} />
-        <Text style={styles.placeholderText}>Mewnie</Text>
-        <Text style={styles.moodText}>{text}</Text>
-      </View>
-
-      {/* Steps Display */}
-      <View style={styles.stepsContainer}>
-        <Text style={styles.stepsLabel}>Today's Steps</Text>
-        <Text style={styles.stepsCount}>{totalSteps.toLocaleString()}</Text>
-
-        {/* Progress Bar */}
-        <View style={styles.progressContainer}>
-          <View style={styles.progressBar}>
-            <View
-              style={[
-                styles.progressFill,
-                { width: `${progressPercent}%` },
-                progressPercent >= 100 && styles.progressComplete
-              ]}
-            />
-          </View>
-          <View style={styles.progressLabels}>
-            <Text style={styles.progressText}>
-              {Math.round(progressPercent)}%
-            </Text>
-            <Text style={styles.goalText}>
-              Goal: {stepGoal.toLocaleString()}
-            </Text>
-          </View>
+    <EnvironmentBackground mood={mood}>
+      <View style={styles.container}>
+        {/* Mewnie Pet Container */}
+        <View style={styles.petContainer}>
+          <MewniePet mood={mood} size={180} />
+          <Text style={styles.placeholderText}>Mewnie</Text>
+          <Text style={styles.moodText}>{text}</Text>
         </View>
 
-        {isPedometerAvailable === 'false' && (
-          <Text style={styles.unavailableText}>
-            Pedometer not available on this device
-          </Text>
-        )}
-        {Platform.OS === 'android' && (
-          <Text style={styles.noteText}>
-            Note: Pedometer requires a development build on Android
-          </Text>
-        )}
+        {/* Steps Display */}
+        <View style={styles.stepsContainer}>
+          <Text style={styles.stepsLabel}>Today's Steps</Text>
+          <Text style={styles.stepsCount}>{totalSteps.toLocaleString()}</Text>
+
+          {/* Progress Bar */}
+          <View style={styles.progressContainer}>
+            <View style={styles.progressBar}>
+              <View
+                style={[
+                  styles.progressFill,
+                  { width: `${progressPercent}%` },
+                  progressPercent >= 100 && styles.progressComplete
+                ]}
+              />
+            </View>
+            <View style={styles.progressLabels}>
+              <Text style={styles.progressText}>
+                {Math.round(progressPercent)}%
+              </Text>
+              <Text style={styles.goalText}>
+                Goal: {stepGoal.toLocaleString()}
+              </Text>
+            </View>
+          </View>
+
+          {isPedometerAvailable === 'false' && (
+            <Text style={styles.unavailableText}>
+              Pedometer not available on this device
+            </Text>
+          )}
+          {Platform.OS === 'android' && (
+            <Text style={styles.noteText}>
+              Note: Pedometer requires a development build on Android
+            </Text>
+          )}
+        </View>
       </View>
-    </View>
+    </EnvironmentBackground>
   );
 }
 
@@ -119,6 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: 'transparent',
   },
   petContainer: {
     flex: 1,
@@ -127,32 +131,41 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   placeholderText: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 20,
+    fontWeight: '700',
     marginTop: 12,
-    color: '#888',
+    color: '#fff',
+    textShadowColor: 'rgba(0,0,0,0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   moodText: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 15,
+    color: 'rgba(255,255,255,0.9)',
     marginTop: 4,
+    textShadowColor: 'rgba(0,0,0,0.2)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   stepsContainer: {
     width: '100%',
     paddingVertical: 20,
+    paddingHorizontal: 16,
     alignItems: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    borderRadius: 20,
+    marginHorizontal: 16,
   },
   stepsLabel: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#666',
+    color: '#555',
     marginBottom: 8,
   },
   stepsCount: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: '#4A90D9',
+    color: '#333',
   },
   progressContainer: {
     width: '100%',
