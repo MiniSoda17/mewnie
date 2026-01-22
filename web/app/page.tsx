@@ -14,7 +14,7 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 glass border-b-0 border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="text-2xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-400">
-            mewnie
+            mewnies
           </div>
           <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-300">
             <Link
