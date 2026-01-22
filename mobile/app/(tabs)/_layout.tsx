@@ -26,6 +26,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Mewnie',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="paw" color={color} />,
         }}
       />
