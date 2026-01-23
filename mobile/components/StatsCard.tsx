@@ -11,7 +11,7 @@ export default function StatsCard({ steps, goal }: StatsCardProps) {
   const progress = Math.min((steps / goal) * 100, 100);
 
   return (
-    <BlurView intensity={30} tint="dark" style={styles.container}>
+    <BlurView intensity={40} tint="light" style={styles.container}>
       <View style={styles.headerRow}>
         <Text style={styles.title}>STEPS TODAY</Text>
         <Text style={styles.percentage}>{Math.round(progress)}%</Text>
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 25,
     overflow: 'hidden',
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    borderColor: 'rgba(255,255,255,0.15)',
+    backgroundColor: 'rgba(255,255,255,0.85)',
+    borderColor: 'rgba(0,0,0,0.1)',
     borderWidth: 1,
     alignSelf: 'center',
     marginBottom: 40, // Space from bottom
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   title: {
-    color: 'rgba(255,255,255,0.7)',
+    color: 'rgba(0,0,0,0.6)',
     fontWeight: '700',
     fontSize: 12,
     letterSpacing: 1,
@@ -71,20 +71,20 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   count: {
-    color: '#FFF',
+    color: '#333',
     fontSize: 48,
     fontWeight: '800',
     letterSpacing: -1,
   },
   goal: {
-    color: 'rgba(255,255,255,0.5)',
+    color: 'rgba(0,0,0,0.5)',
     fontSize: 16,
     fontWeight: '600',
     marginLeft: 8,
   },
   progressBg: {
     height: 12,
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: 'rgba(0,0,0,0.15)',
     borderRadius: 6,
     overflow: 'hidden',
   },
