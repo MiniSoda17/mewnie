@@ -4,15 +4,20 @@ import { Pedometer } from 'expo-sensors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Text } from '@/components/Themed';
-import VideoBackground from '@/components/VideoBackground';
+import VideoBackground, { PetMood } from '@/components/VideoBackground';
 import XPBar from '@/components/XPBar';
 import StatsCard from '@/components/StatsCard';
 import { useStepGoal } from '@/contexts/StepGoalContext';
+import { useDebugSteps } from '@/contexts/DebugStepsContext';
+
+// Step thresholds for pet mood
+const MOOD_THRESHOLD = 5000; // Steps needed and above to reach neutral mood
 
 export default function HomeScreen() {
   const [todaySteps, setTodaySteps] = useState<number>(0);
   const [currentSteps, setCurrentSteps] = useState<number>(0);
   const { stepGoal } = useStepGoal();
+  const { manualSteps, isManualMode } = useDebugSteps();
 
   useEffect(() => {
     let subscription: ReturnType<typeof Pedometer.watchStepCount> | null = null;
@@ -49,7 +54,12 @@ export default function HomeScreen() {
     };
   }, []);
 
-  const totalSteps = todaySteps + currentSteps;
+  // Use manual steps when debug mode is enabled, otherwise use real pedometer steps
+  const realSteps = todaySteps + currentSteps;
+  const totalSteps = isManualMode ? (manualSteps ?? 0) : realSteps;
+
+  // Calculate pet mood based on step count
+  const petMood: PetMood = totalSteps >= MOOD_THRESHOLD ? 'neutral' : 'tired';
 
   // Gamification Logic (Mock Levels)
   const XP_PER_LEVEL = 2000;
@@ -58,7 +68,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <VideoBackground imageSource={require('@/assets/images/background.png')}/>
+      <VideoBackground mood={petMood} />
       
       <SafeAreaView style={styles.safeArea}>
         {/* Top Section: XP Bar */}
