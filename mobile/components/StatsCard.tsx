@@ -26,7 +26,7 @@ export default function StatsCard({ steps, goal }: StatsCardProps) {
         <View 
           style={[
             styles.progressFill, 
-            { width: `${progress}%`, backgroundColor: progress >= 100 ? '#4CAF50' : '#4A90D9' }
+            { width: `${progress}%`, backgroundColor: progress >= 100 ? '#4CAF50' : '#E57373' }
           ]} 
         />
       </View>
