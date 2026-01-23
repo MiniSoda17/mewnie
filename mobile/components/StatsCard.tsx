@@ -20,16 +20,25 @@ function CircularProgress({ progress, size, strokeWidth }: CircularProgressProps
   const circumference = radius * 2 * Math.PI;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
   const isComplete = progress >= 100;
+  const innerRadius = radius - strokeWidth / 2;
   
   return (
     <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+      {/* White center fill */}
+      <View style={{
+        position: 'absolute',
+        width: innerRadius * 2,
+        height: innerRadius * 2,
+        borderRadius: innerRadius,
+        backgroundColor: 'rgba(255,255,255,0.6)',
+      }} />
       <Svg width={size} height={size} style={{ transform: [{ rotate: '-90deg' }] }}>
-        {/* Background Circle */}
+        {/* Background Circle Track */}
         <Circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="rgba(0,0,0,0.1)"
+          stroke="rgba(255,255,255,0.5)"
           strokeWidth={strokeWidth}
           fill="transparent"
         />
@@ -38,7 +47,7 @@ function CircularProgress({ progress, size, strokeWidth }: CircularProgressProps
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke={isComplete ? '#4CAF50' : '#4A90D9'}
+          stroke={isComplete ? '#4CAF50' : '#5CB85C'}
           strokeWidth={strokeWidth}
           fill="transparent"
           strokeDasharray={circumference}
@@ -68,12 +77,12 @@ export default function StatsCard({ steps, goal }: StatsCardProps) {
           <Text style={styles.title}>STEPS TODAY</Text>
           <View style={styles.countRow}>
             <Text style={styles.count}>{steps.toLocaleString()}</Text>
+            <Text style={styles.goalInline}>/{goal.toLocaleString()}</Text>
           </View>
-          <Text style={styles.goal}>of {goal.toLocaleString()} goal</Text>
         </View>
         
         {/* Right Side: Circular Progress */}
-        <CircularProgress progress={progress} size={80} strokeWidth={8} />
+        <CircularProgress progress={progress} size={90} strokeWidth={10} />
       </View>
     </BlurView>
   );
@@ -113,14 +122,13 @@ const styles = StyleSheet.create({
   count: {
     fontFamily: 'Quicksand_700Bold',
     color: '#333',
-    fontSize: 40,
+    fontSize: 38,
     letterSpacing: -1,
   },
-  goal: {
+  goalInline: {
     fontFamily: 'Quicksand_500Medium',
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    marginTop: 2,
+    color: 'rgba(0,0,0,0.35)',
+    fontSize: 24,
   },
   percentageContainer: {
     position: 'absolute',
@@ -130,12 +138,12 @@ const styles = StyleSheet.create({
   percentageText: {
     fontFamily: 'Quicksand_700Bold',
     fontSize: 18,
-    color: '#4A90D9',
+    color: '#5CB85C',
   },
   percentageSymbol: {
     fontFamily: 'Quicksand_600SemiBold',
     fontSize: 11,
-    color: '#4A90D9',
+    color: '#5CB85C',
   },
   percentageComplete: {
     color: '#4CAF50',
