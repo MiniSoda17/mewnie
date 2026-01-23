@@ -1,12 +1,23 @@
 import { useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, ScrollView, Switch } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, ScrollView, Switch, Image } from 'react-native';
 import Slider from '@react-native-community/slider';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { Text, View } from '@/components/Themed';
 import { useStepGoal } from '@/contexts/StepGoalContext';
 import { useDebugSteps } from '@/contexts/DebugStepsContext';
 
-const PRESET_GOALS = [2000, 5000, 7500, 10000, 15000];
+const PRESET_GOALS = [5000, 7500, 10000, 15000];
+
+// Mock user data - in a real app this would come from a context/API
+const userData = {
+    name: 'Alex',
+    gender: 'Not specified',
+    height: '170 cm',
+    weight: '65 kg',
+    birthDate: 'Jan 1, 2000',
+};
 
 export default function ProfileScreen() {
     const { stepGoal, setStepGoal } = useStepGoal();
@@ -32,264 +43,408 @@ export default function ProfileScreen() {
         }
     };
 
+    const handleLogout = () => {
+        // TODO: Implement actual logout logic
+        console.log('Logout pressed');
+    };
+
     return (
-        <ScrollView style={styles.scrollView}>
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.title}>Profile</Text>
-                    <Text style={styles.subtitle}>Set your daily step goal</Text>
-                </View>
-
-                {/* Current Goal Display */}
-                <View style={styles.currentGoalCard}>
-                    <Text style={styles.currentGoalLabel}>Current Goal</Text>
-                    <Text style={styles.currentGoalValue}>{stepGoal.toLocaleString()}</Text>
-                    <Text style={styles.currentGoalUnit}>steps per day</Text>
-                </View>
-
-                {/* Preset Goals */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Quick Select</Text>
-                    <View style={styles.presetGrid}>
-                        {PRESET_GOALS.map((goal) => (
-                            <TouchableOpacity
-                                key={goal}
-                                style={[
-                                    styles.presetButton,
-                                    stepGoal === goal && styles.presetButtonActive,
-                                ]}
-                                onPress={() => handlePresetSelect(goal)}
-                            >
-                                <Text
-                                    style={[
-                                        styles.presetButtonText,
-                                        stepGoal === goal && styles.presetButtonTextActive,
-                                    ]}
-                                >
-                                    {goal.toLocaleString()}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </View>
-
-                {/* Custom Goal */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Custom Goal</Text>
-                    <View style={styles.customInputRow}>
-                        <TextInput
-                            style={styles.customInput}
-                            value={customGoal}
-                            onChangeText={setCustomGoal}
-                            keyboardType="number-pad"
-                            placeholder="Enter steps"
-                            placeholderTextColor="#999"
-                        />
-                        <TouchableOpacity
-                            style={styles.setButton}
-                            onPress={handleCustomGoalSubmit}
-                        >
-                            <Text style={styles.setButtonText}>Set</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                {/* Debug: Manual Steps Override */}
-                <View style={styles.debugSection}>
-                    <View style={styles.debugHeader}>
-                        <Text style={styles.debugTitle}>🧪 Debug: Manual Steps</Text>
-                        <Switch
-                            value={isManualMode}
-                            onValueChange={handleManualModeToggle}
-                            trackColor={{ false: '#767577', true: '#81b0ff' }}
-                            thumbColor={isManualMode ? '#4A90D9' : '#f4f3f4'}
-                        />
-                    </View>
-                    {isManualMode && (
-                        <>
-                            <Text style={styles.debugValue}>
-                                {(manualSteps ?? 0).toLocaleString()} steps
-                            </Text>
-                            <Slider
-                                style={styles.slider}
-                                minimumValue={0}
-                                maximumValue={10000}
-                                step={100}
-                                value={manualSteps ?? 0}
-                                onValueChange={(value: number) => setManualSteps(value)}
-                                minimumTrackTintColor="#4A90D9"
-                                maximumTrackTintColor="#ddd"
-                                thumbTintColor="#4A90D9"
+        <SafeAreaView style={styles.safeArea} edges={['top']}>
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+                <View style={styles.container}>
+                    
+                    {/* Profile Picture Section */}
+                    <View style={styles.profileSection}>
+                        <View style={styles.avatarContainer}>
+                            <Image 
+                                source={require('@/assets/images/icon.png')}
+                                style={styles.avatar}
                             />
-                            <View style={styles.sliderLabels}>
-                                <Text style={styles.sliderLabel}>0</Text>
-                                <Text style={styles.sliderLabelCenter}>5,000 (neutral)</Text>
-                                <Text style={styles.sliderLabel}>10,000</Text>
+                            <View style={styles.editBadge}>
+                                <FontAwesome name="pencil" size={12} color="#fff" />
                             </View>
-                            <Text style={styles.debugHint}>
-                                Below 5,000 = tired pet • Above 5,000 = neutral pet
-                            </Text>
-                        </>
-                    )}
-                </View>
+                        </View>
+                        <Text style={styles.userName}>{userData.name}</Text>
+                        <Text style={styles.userSubtitle}>Mewnie Trainer</Text>
+                    </View>
 
-                {/* Goal Tips */}
-                <View style={styles.tipsSection}>
-                    <Text style={styles.tipsTitle}>💡 Goal Tips</Text>
-                    <Text style={styles.tipText}>• 2,000 steps ≈ 1 mile walked</Text>
-                    <Text style={styles.tipText}>• 5,000 steps is a moderate daily goal</Text>
-                    <Text style={styles.tipText}>• 10,000 steps is great for fitness</Text>
-                    <Text style={styles.tipText}>• Your Mewnie gets happier as you walk!</Text>
+                    {/* Personal Details Card */}
+                    <View style={styles.card}>
+                        <Text style={styles.cardTitle}>Personal Details</Text>
+                        
+                        <View style={styles.detailRow}>
+                            <View style={styles.detailIcon}>
+                                <FontAwesome name="user" size={16} color="#4A90D9" />
+                            </View>
+                            <Text style={styles.detailLabel}>Name</Text>
+                            <Text style={styles.detailValue}>{userData.name}</Text>
+                        </View>
+
+                        <View style={styles.detailRow}>
+                            <View style={styles.detailIcon}>
+                                <FontAwesome name="venus-mars" size={16} color="#4A90D9" />
+                            </View>
+                            <Text style={styles.detailLabel}>Gender</Text>
+                            <Text style={styles.detailValue}>{userData.gender}</Text>
+                        </View>
+
+                        <View style={styles.detailRow}>
+                            <View style={styles.detailIcon}>
+                                <FontAwesome name="arrows-v" size={16} color="#4A90D9" />
+                            </View>
+                            <Text style={styles.detailLabel}>Height</Text>
+                            <Text style={styles.detailValue}>{userData.height}</Text>
+                        </View>
+
+                        <View style={styles.detailRow}>
+                            <View style={styles.detailIcon}>
+                                <FontAwesome name="balance-scale" size={16} color="#4A90D9" />
+                            </View>
+                            <Text style={styles.detailLabel}>Weight</Text>
+                            <Text style={styles.detailValue}>{userData.weight}</Text>
+                        </View>
+
+                        <View style={[styles.detailRow, styles.detailRowLast]}>
+                            <View style={styles.detailIcon}>
+                                <FontAwesome name="birthday-cake" size={16} color="#4A90D9" />
+                            </View>
+                            <Text style={styles.detailLabel}>Birth Date</Text>
+                            <Text style={styles.detailValue}>{userData.birthDate}</Text>
+                        </View>
+                    </View>
+
+                    {/* Step Goal Card */}
+                    <View style={styles.card}>
+                        <Text style={styles.cardTitle}>Daily Step Goal</Text>
+                        
+                        <View style={styles.goalDisplay}>
+                            <FontAwesome name="flag-checkered" size={24} color="#4A90D9" />
+                            <Text style={styles.goalValue}>{stepGoal.toLocaleString()}</Text>
+                            <Text style={styles.goalUnit}>steps</Text>
+                        </View>
+
+                        <View style={styles.presetGrid}>
+                            {PRESET_GOALS.map((goal) => (
+                                <TouchableOpacity
+                                    key={goal}
+                                    style={[
+                                        styles.presetButton,
+                                        stepGoal === goal && styles.presetButtonActive,
+                                    ]}
+                                    onPress={() => handlePresetSelect(goal)}
+                                >
+                                    <Text
+                                        style={[
+                                            styles.presetButtonText,
+                                            stepGoal === goal && styles.presetButtonTextActive,
+                                        ]}
+                                    >
+                                        {(goal / 1000)}k
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+
+                        <View style={styles.customInputRow}>
+                            <TextInput
+                                style={styles.customInput}
+                                value={customGoal}
+                                onChangeText={setCustomGoal}
+                                keyboardType="number-pad"
+                                placeholder="Custom goal"
+                                placeholderTextColor="#999"
+                            />
+                            <TouchableOpacity
+                                style={styles.setButton}
+                                onPress={handleCustomGoalSubmit}
+                            >
+                                <Text style={styles.setButtonText}>Set</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    {/* Logout Button */}
+                    <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                        <FontAwesome name="sign-out" size={18} color="#E53935" />
+                        <Text style={styles.logoutText}>Log Out</Text>
+                    </TouchableOpacity>
+
+                    {/* Debug Section - At the very bottom */}
+                    <View style={styles.debugSection}>
+                        <View style={styles.debugHeader}>
+                            <Text style={styles.debugTitle}>🧪 Debug: Manual Steps</Text>
+                            <Switch
+                                value={isManualMode}
+                                onValueChange={handleManualModeToggle}
+                                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                                thumbColor={isManualMode ? '#4A90D9' : '#f4f3f4'}
+                            />
+                        </View>
+                        {isManualMode && (
+                            <>
+                                <Text style={styles.debugValue}>
+                                    {(manualSteps ?? 0).toLocaleString()} steps
+                                </Text>
+                                <Slider
+                                    style={styles.slider}
+                                    minimumValue={0}
+                                    maximumValue={10000}
+                                    step={100}
+                                    value={manualSteps ?? 0}
+                                    onValueChange={(value: number) => setManualSteps(value)}
+                                    minimumTrackTintColor="#4A90D9"
+                                    maximumTrackTintColor="#ddd"
+                                    thumbTintColor="#4A90D9"
+                                />
+                                <View style={styles.sliderLabels}>
+                                    <Text style={styles.sliderLabel}>0</Text>
+                                    <Text style={styles.sliderLabelCenter}>5,000</Text>
+                                    <Text style={styles.sliderLabel}>10,000</Text>
+                                </View>
+                            </>
+                        )}
+                    </View>
+
                 </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: '#F5F7FA', // Softer distinct background
+    },
     scrollView: {
         flex: 1,
     },
     container: {
         flex: 1,
-        padding: 20,
-    },
-    header: {
-        marginBottom: 24,
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        marginBottom: 4,
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#666',
-    },
-    currentGoalCard: {
-        backgroundColor: '#4A90D9',
-        borderRadius: 16,
         padding: 24,
+        paddingBottom: 40,
+    },
+    
+    // Profile Section
+    profileSection: {
         alignItems: 'center',
-        marginBottom: 24,
+        marginBottom: 32,
+        marginTop: 10,
     },
-    currentGoalLabel: {
+    avatarContainer: {
+        position: 'relative',
+        marginBottom: 16,
+        shadowColor: '#4A90D9',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 10,
+    },
+    avatar: {
+        width: 110,
+        height: 110,
+        borderRadius: 40, // Squircle shape
+        backgroundColor: '#FFF',
+    },
+    editBadge: {
+        position: 'absolute',
+        bottom: -6,
+        right: -6,
+        backgroundColor: '#4A90D9',
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 3,
+        borderColor: '#F5F7FA',
+    },
+    userName: {
+        fontSize: 22,
+        fontWeight: '700',
+        color: '#2D3436', // Softer dark gray
+        marginBottom: 2,
+    },
+    userSubtitle: {
         fontSize: 14,
-        color: 'rgba(255,255,255,0.8)',
-        marginBottom: 4,
+        color: '#8A959E', // Muted text
+        letterSpacing: 0.5,
     },
-    currentGoalValue: {
-        fontSize: 48,
-        fontWeight: 'bold',
-        color: '#fff',
+
+    // Cards
+    card: {
+        backgroundColor: '#FFF',
+        borderRadius: 24,
+        padding: 24,
+        marginBottom: 20,
+        // Very subtle shadow
+        shadowColor: 'rgba(0,0,0,0.05)',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 1,
+        shadowRadius: 15,
+        elevation: 1,
     },
-    currentGoalUnit: {
-        fontSize: 14,
-        color: 'rgba(255,255,255,0.8)',
-        marginTop: 4,
+    cardTitle: {
+        fontSize: 13,
+        fontWeight: '800',
+        color: '#B0B0C0', // Uppercase muted label
+        marginBottom: 20,
+        textTransform: 'uppercase',
+        letterSpacing: 1,
     },
-    section: {
-        marginBottom: 24,
+
+    // Detail Rows
+    detailRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 14,
+        borderBottomWidth: 1,
+        borderBottomColor: '#F5F5FA',
     },
-    sectionTitle: {
-        fontSize: 16,
+    detailRowLast: {
+        borderBottomWidth: 0,
+        paddingBottom: 0,
+    },
+    detailIcon: {
+        width: 36,
+        height: 36,
+        backgroundColor: '#F0F8FF', // Very light blue bg for icons
+        borderRadius: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 16,
+    },
+    detailLabel: {
+        flex: 1,
+        fontSize: 15,
+        color: '#5F6368', // Neutral gray
+        fontWeight: '500',
+    },
+    detailValue: {
+        fontSize: 15,
         fontWeight: '600',
-        marginBottom: 12,
-        color: '#333',
+        color: '#2D3436',
     },
+
+    // Goal Display
+    goalDisplay: {
+        flexDirection: 'row',
+        alignItems: 'baseline',
+        justifyContent: 'center',
+        marginBottom: 24,
+    },
+    goalValue: {
+        fontSize: 42,
+        fontWeight: '800',
+        color: '#4A90D9',
+        letterSpacing: -1,
+    },
+    goalUnit: {
+        fontSize: 14,
+        color: '#8A959E',
+        marginLeft: 8,
+        fontWeight: '600',
+    },
+
+    // Preset Grid
     presetGrid: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: 10,
+        justifyContent: 'space-between',
+        marginBottom: 20,
+        gap: 8,
     },
     presetButton: {
+        flex: 1,
         paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 25,
-        borderWidth: 2,
-        borderColor: '#4A90D9',
-        backgroundColor: 'transparent',
+        borderRadius: 16,
+        backgroundColor: '#F5F7FA',
+        alignItems: 'center',
     },
     presetButtonActive: {
         backgroundColor: '#4A90D9',
+        shadowColor: '#4A90D9',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
     },
     presetButtonText: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#4A90D9',
+        fontSize: 13,
+        fontWeight: '700',
+        color: '#8A959E',
     },
     presetButtonTextActive: {
-        color: '#fff',
+        color: '#FFF',
     },
+
+    // Custom Input
     customInputRow: {
         flexDirection: 'row',
-        gap: 10,
+        gap: 12,
     },
     customInput: {
         flex: 1,
-        borderWidth: 2,
-        borderColor: '#ddd',
-        borderRadius: 12,
+        backgroundColor: '#F5F7FA',
+        borderRadius: 16,
         paddingHorizontal: 16,
-        paddingVertical: 12,
-        fontSize: 18,
-        color: '#333',
+        paddingVertical: 14,
+        fontSize: 15,
+        color: '#2D3436',
+        fontWeight: '600',
     },
     setButton: {
-        backgroundColor: '#4A90D9',
-        paddingHorizontal: 24,
-        borderRadius: 12,
+        backgroundColor: '#2D3436', // Dark accent for action
+        paddingHorizontal: 28,
+        borderRadius: 16,
         justifyContent: 'center',
     },
     setButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    tipsSection: {
-        backgroundColor: '#F5F5F5',
-        borderRadius: 12,
-        padding: 16,
-        marginTop: 8,
-    },
-    tipsTitle: {
-        fontSize: 16,
-        fontWeight: '600',
-        marginBottom: 12,
-        color: '#333',
-    },
-    tipText: {
+        color: '#FFF',
         fontSize: 14,
-        color: '#666',
-        marginBottom: 6,
-        lineHeight: 20,
+        fontWeight: '700',
     },
+
+    // Logout Button
+    logoutButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 18,
+        marginBottom: 32,
+        gap: 8,
+        opacity: 0.6,
+    },
+    logoutText: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: '#FF6B6B',
+    },
+
+    // Debug Section
     debugSection: {
-        backgroundColor: '#FFF3E0',
-        borderRadius: 12,
-        padding: 16,
-        marginBottom: 24,
+        marginTop: 20,
+        padding: 20,
+        backgroundColor: 'rgba(255, 240, 200, 0.4)', // Very translucent pill
+        borderRadius: 20,
         borderWidth: 1,
-        borderColor: '#FFB74D',
+        borderColor: 'rgba(255, 165, 0, 0.1)',
     },
     debugHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 8,
     },
     debugTitle: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#E65100',
+        fontSize: 12,
+        fontWeight: '700',
+        color: '#DAA520',
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
     },
     debugValue: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#E65100',
+        fontSize: 18,
+        fontWeight: '700',
+        color: '#DAA520', // GoldenRod
         textAlign: 'center',
-        marginVertical: 8,
+        marginVertical: 12,
     },
     slider: {
         width: '100%',
@@ -298,22 +453,17 @@ const styles = StyleSheet.create({
     sliderLabels: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: -8,
+        marginTop: -6,
     },
     sliderLabel: {
-        fontSize: 12,
-        color: '#666',
-    },
-    sliderLabelCenter: {
-        fontSize: 12,
-        color: '#4A90D9',
+        fontSize: 10,
+        color: '#DAA520',
+        opacity: 0.6,
         fontWeight: '600',
     },
-    debugHint: {
-        fontSize: 12,
-        color: '#666',
-        textAlign: 'center',
-        marginTop: 8,
-        fontStyle: 'italic',
+    sliderLabelCenter: {
+        fontSize: 10,
+        color: '#4A90D9',
+        fontWeight: '700',
     },
 });

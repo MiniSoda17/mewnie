@@ -1,10 +1,60 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { BlurView } from 'expo-blur';
+import Svg, { Circle } from 'react-native-svg';
 
 interface StatsCardProps {
   steps: number;
   goal: number;
+}
+
+// Circular Progress Component
+interface CircularProgressProps {
+  progress: number; // 0-100
+  size: number;
+  strokeWidth: number;
+}
+
+function CircularProgress({ progress, size, strokeWidth }: CircularProgressProps) {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+  const isComplete = progress >= 100;
+  
+  return (
+    <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+      <Svg width={size} height={size} style={{ transform: [{ rotate: '-90deg' }] }}>
+        {/* Background Circle */}
+        <Circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="rgba(0,0,0,0.1)"
+          strokeWidth={strokeWidth}
+          fill="transparent"
+        />
+        {/* Progress Circle */}
+        <Circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke={isComplete ? '#4CAF50' : '#4A90D9'}
+          strokeWidth={strokeWidth}
+          fill="transparent"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+        />
+      </Svg>
+      {/* Percentage Text in Center */}
+      <View style={styles.percentageContainer}>
+        <Text style={[styles.percentageText, isComplete && styles.percentageComplete]}>
+          {Math.round(progress)}
+        </Text>
+        <Text style={[styles.percentageSymbol, isComplete && styles.percentageComplete]}>%</Text>
+      </View>
+    </View>
+  );
 }
 
 export default function StatsCard({ steps, goal }: StatsCardProps) {
@@ -12,26 +62,19 @@ export default function StatsCard({ steps, goal }: StatsCardProps) {
 
   return (
     <BlurView intensity={80} tint="light" style={styles.container}>
-      <View style={styles.headerRow}>
-        <Text style={styles.title}>STEPS TODAY</Text>
-        <Text style={styles.percentage}>{Math.round(progress)}%</Text>
+      <View style={styles.contentRow}>
+        {/* Left Side: Steps Info */}
+        <View style={styles.leftContent}>
+          <Text style={styles.title}>STEPS TODAY</Text>
+          <View style={styles.countRow}>
+            <Text style={styles.count}>{steps.toLocaleString()}</Text>
+          </View>
+          <Text style={styles.goal}>of {goal.toLocaleString()} goal</Text>
+        </View>
+        
+        {/* Right Side: Circular Progress */}
+        <CircularProgress progress={progress} size={80} strokeWidth={8} />
       </View>
-      
-      <View style={styles.countRow}>
-        <Text style={styles.count}>{steps.toLocaleString()}</Text>
-        <Text style={styles.goal}>/ {goal.toLocaleString()}</Text>
-      </View>
-
-      <View style={styles.progressBg}>
-        <View 
-          style={[
-            styles.progressFill, 
-            { width: `${progress}%`, backgroundColor: progress >= 100 ? '#4CAF50' : '#E57373' }
-          ]} 
-        />
-      </View>
-      
-      {/* Optional: Add calories or distance placeholders if needed later */}
     </BlurView>
   );
 }
@@ -39,7 +82,7 @@ export default function StatsCard({ steps, goal }: StatsCardProps) {
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    padding: 20,
+    padding: 24,
     borderRadius: 25,
     overflow: 'hidden',
     backgroundColor: 'rgba(255,255,255,0.3)',
@@ -48,48 +91,53 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 40,
   },
-  headerRow: {
+  contentRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    marginBottom: 10,
+  },
+  leftContent: {
+    alignItems: 'flex-start',
   },
   title: {
-    color: 'rgba(0,0,0,0.6)',
-    fontWeight: '700',
+    fontFamily: 'Quicksand_600SemiBold',
+    color: 'rgba(0,0,0,0.5)',
     fontSize: 12,
     letterSpacing: 1,
-  },
-  percentage: {
-    color: '#4A90D9',
-    fontWeight: '700',
-    fontSize: 14,
+    marginBottom: 4,
   },
   countRow: {
     flexDirection: 'row',
     alignItems: 'baseline',
-    marginBottom: 16,
   },
   count: {
+    fontFamily: 'Quicksand_700Bold',
     color: '#333',
-    fontSize: 48,
-    fontWeight: '800',
+    fontSize: 40,
     letterSpacing: -1,
   },
   goal: {
-    color: 'rgba(0,0,0,0.5)',
-    fontSize: 16,
-    fontWeight: '600',
-    marginLeft: 8,
+    fontFamily: 'Quicksand_500Medium',
+    color: 'rgba(0,0,0,0.4)',
+    fontSize: 14,
+    marginTop: 2,
   },
-  progressBg: {
-    height: 12,
-    backgroundColor: 'rgba(0,0,0,0.15)',
-    borderRadius: 6,
-    overflow: 'hidden',
+  percentageContainer: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems: 'baseline',
   },
-  progressFill: {
-    height: '100%',
-    borderRadius: 6,
-  }
+  percentageText: {
+    fontFamily: 'Quicksand_700Bold',
+    fontSize: 18,
+    color: '#4A90D9',
+  },
+  percentageSymbol: {
+    fontFamily: 'Quicksand_600SemiBold',
+    fontSize: 11,
+    color: '#4A90D9',
+  },
+  percentageComplete: {
+    color: '#4CAF50',
+  },
 });
