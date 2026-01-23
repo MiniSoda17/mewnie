@@ -10,27 +10,28 @@ interface StatsCardProps {
 
 // Circular Progress Component
 interface CircularProgressProps {
-  progress: number; // 0-100
+  progress: number; // 0-100 for visual
+  actualProgress: number; // Can be over 100 for display
   size: number;
   strokeWidth: number;
 }
 
-function CircularProgress({ progress, size, strokeWidth }: CircularProgressProps) {
+function CircularProgress({ progress, actualProgress, size, strokeWidth }: CircularProgressProps) {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
-  const isComplete = progress >= 100;
+  const isComplete = actualProgress >= 100;
   
   return (
     <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
       <Svg width={size} height={size} style={{ transform: [{ rotate: '-90deg' }] }}>
-        {/* White Background Track - slightly thicker for subtle halo effect */}
+        {/* White Background Track - full circle */}
         <Circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="rgba(255,255,255,0.7)"
-          strokeWidth={strokeWidth + 4}
+          stroke="rgba(255,255,255,0.6)"
+          strokeWidth={strokeWidth}
           fill="transparent"
         />
         {/* Progress Circle */}
@@ -38,8 +39,8 @@ function CircularProgress({ progress, size, strokeWidth }: CircularProgressProps
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke={isComplete ? '#4CAF50' : '#5CB85C'}
-          strokeWidth={strokeWidth}
+          stroke={isComplete ? '#5CB85C' : '#E57373'}
+          strokeWidth={strokeWidth - 2}
           fill="transparent"
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
@@ -48,17 +49,18 @@ function CircularProgress({ progress, size, strokeWidth }: CircularProgressProps
       </Svg>
       {/* Percentage Text in Center */}
       <View style={styles.percentageContainer}>
-        <Text style={[styles.percentageText, isComplete && styles.percentageComplete]}>
-          {Math.round(progress)}
+        <Text style={[styles.percentageText, isComplete ? styles.percentageComplete : styles.percentageIncomplete]}>
+          {Math.round(actualProgress)}
         </Text>
-        <Text style={[styles.percentageSymbol, isComplete && styles.percentageComplete]}>%</Text>
+        <Text style={[styles.percentageSymbol, isComplete ? styles.percentageComplete : styles.percentageIncomplete]}>%</Text>
       </View>
     </View>
   );
 }
 
 export default function StatsCard({ steps, goal }: StatsCardProps) {
-  const progress = Math.min((steps / goal) * 100, 100);
+  const progress = (steps / goal) * 100; // Allow over 100%
+  const displayProgress = Math.min(progress, 100); // Cap visual at 100%
 
   return (
     <BlurView intensity={80} tint="light" style={styles.container}>
@@ -73,7 +75,7 @@ export default function StatsCard({ steps, goal }: StatsCardProps) {
         </View>
         
         {/* Right Side: Circular Progress */}
-        <CircularProgress progress={progress} size={90} strokeWidth={8} />
+        <CircularProgress progress={displayProgress} actualProgress={progress} size={90} strokeWidth={12} />
       </View>
     </BlurView>
   );
@@ -138,6 +140,9 @@ const styles = StyleSheet.create({
     color: '#5CB85C',
   },
   percentageComplete: {
-    color: '#4CAF50',
+    color: '#5CB85C',
+  },
+  percentageIncomplete: {
+    color: '#E57373',
   },
 });
