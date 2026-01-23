@@ -11,7 +11,7 @@ export default function StatsCard({ steps, goal }: StatsCardProps) {
   const progress = Math.min((steps / goal) * 100, 100);
 
   return (
-    <BlurView intensity={40} tint="light" style={styles.container}>
+    <BlurView intensity={80} tint="light" style={styles.container}>
       <View style={styles.headerRow}>
         <Text style={styles.title}>STEPS TODAY</Text>
         <Text style={styles.percentage}>{Math.round(progress)}%</Text>
@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 25,
     overflow: 'hidden',
-    backgroundColor: 'rgba(255,255,255,0.85)',
-    borderColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    borderColor: 'rgba(255,255,255,0.5)',
     borderWidth: 1,
     alignSelf: 'center',
-    marginBottom: 40, // Space from bottom
+    marginBottom: 40,
   },
   headerRow: {
     flexDirection: 'row',
