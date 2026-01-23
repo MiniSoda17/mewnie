@@ -25,7 +25,7 @@ const moodBackgrounds: Record<PetMood, MoodMediaConfig> = {
     imageSource: require('@/assets/images/background-tired.png'), // Fallback to neutral for now
   },
   neutral: {
-    imageSource: require('@/assets/images/background.png'),
+    imageSource: require('@/assets/images/gemini 2.png'),
   },
 };
 
