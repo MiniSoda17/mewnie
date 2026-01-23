@@ -25,7 +25,8 @@ const moodBackgrounds: Record<PetMood, MoodMediaConfig> = {
     imageSource: require('@/assets/images/background-tired.png'), // Fallback to neutral for now
   },
   neutral: {
-    imageSource: require('@/assets/images/gemini 2.png'),
+    // Use videoSource for video files, not imageSource
+    videoSource: require('@/assets/videos/background-vid.mp4'),
   },
 };
 
@@ -100,6 +101,6 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Dark overlay for contrast
+    backgroundColor: 'rgba(0, 0, 0, 0.1)', // Light overlay for slight contrast
   },
 });
