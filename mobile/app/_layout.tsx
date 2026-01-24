@@ -3,7 +3,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import {
   Quicksand_400Regular,
@@ -15,6 +15,7 @@ import {
 import { useColorScheme } from '@/components/useColorScheme';
 import { StepGoalProvider } from '@/contexts/StepGoalContext';
 import { DebugStepsProvider } from '@/contexts/DebugStepsContext';
+import LoadingScreen from '@/components/LoadingScreen';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -30,7 +31,7 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
+  const [fontsLoaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     Quicksand_400Regular,
     Quicksand_500Medium,
@@ -39,19 +40,27 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
+
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
 
   useEffect(() => {
-    if (loaded) {
+    if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [fontsLoaded]);
 
-  if (!loaded) {
+  // Show nothing until fonts are loaded
+  if (!fontsLoaded) {
     return null;
+  }
+
+  // Show custom loading screen until assets are loaded
+  if (!assetsLoaded) {
+    return <LoadingScreen onFinished={() => setAssetsLoaded(true)} />;
   }
 
   return <RootLayoutNav />;

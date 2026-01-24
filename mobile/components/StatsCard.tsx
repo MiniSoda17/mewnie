@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { BlurView } from 'expo-blur';
 import Svg, { Circle } from 'react-native-svg';
+import Animated, { 
+  useSharedValue, 
+  useAnimatedProps, 
+  withTiming, 
+  useDerivedValue,
+  Easing,
+  runOnJS
+} from 'react-native-reanimated';
+import { useState } from 'react';
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 interface StatsCardProps {
   steps: number;
   goal: number;
 }
 
-// Circular Progress Component
+// Animated Circular Progress Component
 interface CircularProgressProps {
   progress: number; // 0-100 for visual
   actualProgress: number; // Can be over 100 for display
@@ -19,8 +30,36 @@ interface CircularProgressProps {
 function CircularProgress({ progress, actualProgress, size, strokeWidth }: CircularProgressProps) {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
-  const strokeDashoffset = circumference - (progress / 100) * circumference;
   const isComplete = actualProgress >= 100;
+  
+  // Animated progress value for circle (0-100)
+  const animatedProgress = useSharedValue(0);
+  // Animated actual progress for percentage display (can be over 100)
+  const animatedActualProgress = useSharedValue(0);
+  const [displayPercent, setDisplayPercent] = useState(0);
+  
+  useEffect(() => {
+    animatedProgress.value = withTiming(progress, { 
+      duration: 2500, 
+      easing: Easing.out(Easing.cubic) 
+    });
+    animatedActualProgress.value = withTiming(actualProgress, { 
+      duration: 2500, 
+      easing: Easing.out(Easing.cubic) 
+    });
+  }, [progress, actualProgress]);
+
+  // Animate the percentage text - use actualProgress directly
+  useDerivedValue(() => {
+    runOnJS(setDisplayPercent)(Math.round(animatedActualProgress.value));
+  });
+
+  const animatedProps = useAnimatedProps(() => {
+    const strokeDashoffset = circumference - (animatedProgress.value / 100) * circumference;
+    return {
+      strokeDashoffset,
+    };
+  });
   
   return (
     <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
@@ -30,12 +69,12 @@ function CircularProgress({ progress, actualProgress, size, strokeWidth }: Circu
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="rgba(255,255,255)"
+          stroke="rgba(255,255,255,1)"
           strokeWidth={strokeWidth}
           fill="transparent"
         />
-        {/* Progress Circle */}
-        <Circle
+        {/* Animated Progress Circle */}
+        <AnimatedCircle
           cx={size / 2}
           cy={size / 2}
           r={radius}
@@ -43,19 +82,38 @@ function CircularProgress({ progress, actualProgress, size, strokeWidth }: Circu
           strokeWidth={strokeWidth - 2}
           fill="transparent"
           strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
+          animatedProps={animatedProps}
           strokeLinecap="round"
         />
       </Svg>
       {/* Percentage Text in Center */}
       <View style={styles.percentageContainer}>
         <Text style={[styles.percentageText, isComplete ? styles.percentageComplete : styles.percentageIncomplete]}>
-          {Math.round(actualProgress)}
+          {displayPercent}
         </Text>
         <Text style={[styles.percentageSymbol, isComplete ? styles.percentageComplete : styles.percentageIncomplete]}>%</Text>
       </View>
     </View>
   );
+}
+
+// Animated counter component for step count
+function AnimatedCounter({ value }: { value: number }) {
+  const animatedValue = useSharedValue(0);
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    animatedValue.value = withTiming(value, { 
+      duration: 2500, 
+      easing: Easing.out(Easing.cubic) 
+    });
+  }, [value]);
+
+  useDerivedValue(() => {
+    runOnJS(setDisplayValue)(Math.round(animatedValue.value));
+  });
+
+  return <Text style={styles.count}>{displayValue.toLocaleString()}</Text>;
 }
 
 export default function StatsCard({ steps, goal }: StatsCardProps) {
@@ -69,7 +127,7 @@ export default function StatsCard({ steps, goal }: StatsCardProps) {
         <View style={styles.leftContent}>
           <Text style={styles.title}>STEPS TODAY</Text>
           <View style={styles.countRow}>
-            <Text style={styles.count}>{steps.toLocaleString()}</Text>
+            <AnimatedCounter value={steps} />
           </View>
           <Text style={styles.goal}>of {goal.toLocaleString()} goal</Text>
         </View>
@@ -85,13 +143,18 @@ const styles = StyleSheet.create({
   container: {
     width: '90%',
     padding: 24,
-    borderRadius: 25,
+    borderRadius: 28,
     overflow: 'hidden',
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    borderColor: 'rgba(255,255,255,0.5)',
-    borderWidth: 1,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderColor: 'rgba(255,255,255,0.4)',
+    borderWidth: 1.5,
     alignSelf: 'center',
     marginBottom: 40,
+    // Liquid glass shadow
+    shadowColor: 'rgba(255,255,255,0.5)',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
   },
   contentRow: {
     flexDirection: 'row',

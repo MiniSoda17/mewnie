@@ -22,7 +22,7 @@ const moodBackgrounds: Record<PetMood, MoodMediaConfig> = {
     // imageSource: require('@/assets/images/background-tired.png'),
     // OR for video:
     // videoSource: require('@/assets/videos/background-tired.mp4'),
-    imageSource: require('@/assets/images/background-tired.png'), // Fallback to neutral for now
+    videoSource: require('@/assets/videos/background-tired-vid.mp4'), // Fallback to neutral for now
   },
   neutral: {
     // Use videoSource for video files, not imageSource
