@@ -30,7 +30,7 @@ function CircularProgress({ progress, actualProgress, size, strokeWidth }: Circu
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="rgba(255,255,255,0.6)"
+          stroke="rgba(255,255,255)"
           strokeWidth={strokeWidth}
           fill="transparent"
         />
@@ -39,7 +39,7 @@ function CircularProgress({ progress, actualProgress, size, strokeWidth }: Circu
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke={isComplete ? '#5CB85C' : '#E57373'}
+          stroke={isComplete ? '#5CB85C' : '#DC3545'}
           strokeWidth={strokeWidth - 2}
           fill="transparent"
           strokeDasharray={circumference}
@@ -143,6 +143,6 @@ const styles = StyleSheet.create({
     color: '#5CB85C',
   },
   percentageIncomplete: {
-    color: '#E57373',
+    color: '#DC3545',
   },
 });

@@ -11,7 +11,7 @@ import { useStepGoal } from '@/contexts/StepGoalContext';
 import { useDebugSteps } from '@/contexts/DebugStepsContext';
 
 // Step thresholds for pet mood
-const MOOD_THRESHOLD = 5000; // Steps needed and above to reach neutral mood
+const MOOD_THRESHOLD = 8000; // Steps needed and above to reach neutral mood
 
 export default function HomeScreen() {
   const [todaySteps, setTodaySteps] = useState<number>(0);

@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, ScrollView, Switch, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView, Switch, Image } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -7,8 +6,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Text, View } from '@/components/Themed';
 import { useStepGoal } from '@/contexts/StepGoalContext';
 import { useDebugSteps } from '@/contexts/DebugStepsContext';
-
-const PRESET_GOALS = [5000, 7500, 10000, 15000];
 
 // Mock user data - in a real app this would come from a context/API
 const userData = {
@@ -20,21 +17,8 @@ const userData = {
 };
 
 export default function ProfileScreen() {
-    const { stepGoal, setStepGoal } = useStepGoal();
+    const { stepGoal } = useStepGoal();
     const { manualSteps, isManualMode, setManualSteps, setIsManualMode } = useDebugSteps();
-    const [customGoal, setCustomGoal] = useState(stepGoal.toString());
-
-    const handlePresetSelect = (goal: number) => {
-        setStepGoal(goal);
-        setCustomGoal(goal.toString());
-    };
-
-    const handleCustomGoalSubmit = () => {
-        const goal = parseInt(customGoal, 10);
-        if (!isNaN(goal) && goal > 0) {
-            setStepGoal(goal);
-        }
-    };
 
     const handleManualModeToggle = (enabled: boolean) => {
         setIsManualMode(enabled);
@@ -113,7 +97,7 @@ export default function ProfileScreen() {
                         </View>
                     </View>
 
-                    {/* Step Goal Card */}
+                    {/* Step Goal Card - Display Only */}
                     <View style={styles.card}>
                         <Text style={styles.cardTitle}>Daily Step Goal</Text>
                         
@@ -121,45 +105,6 @@ export default function ProfileScreen() {
                             <FontAwesome name="flag-checkered" size={24} color="#4A90D9" />
                             <Text style={styles.goalValue}>{stepGoal.toLocaleString()}</Text>
                             <Text style={styles.goalUnit}>steps</Text>
-                        </View>
-
-                        <View style={styles.presetGrid}>
-                            {PRESET_GOALS.map((goal) => (
-                                <TouchableOpacity
-                                    key={goal}
-                                    style={[
-                                        styles.presetButton,
-                                        stepGoal === goal && styles.presetButtonActive,
-                                    ]}
-                                    onPress={() => handlePresetSelect(goal)}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.presetButtonText,
-                                            stepGoal === goal && styles.presetButtonTextActive,
-                                        ]}
-                                    >
-                                        {(goal / 1000)}k
-                                    </Text>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-
-                        <View style={styles.customInputRow}>
-                            <TextInput
-                                style={styles.customInput}
-                                value={customGoal}
-                                onChangeText={setCustomGoal}
-                                keyboardType="number-pad"
-                                placeholder="Custom goal"
-                                placeholderTextColor="#999"
-                            />
-                            <TouchableOpacity
-                                style={styles.setButton}
-                                onPress={handleCustomGoalSubmit}
-                            >
-                                <Text style={styles.setButtonText}>Set</Text>
-                            </TouchableOpacity>
                         </View>
                     </View>
 
