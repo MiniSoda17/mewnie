@@ -5,7 +5,9 @@ import Svg, { Circle } from 'react-native-svg';
 import Animated, { 
   useSharedValue, 
   useAnimatedProps, 
+  useAnimatedStyle,
   withTiming, 
+  withSpring,
   useDerivedValue,
   Easing,
   runOnJS
@@ -32,14 +34,19 @@ function CircularProgress({ progress, actualProgress, size, strokeWidth }: Circu
   const circumference = radius * 2 * Math.PI;
   const isComplete = actualProgress >= 100;
   
-  // Animated progress value for circle (0-100)
+  // Animated progress value for circle (capped at 100%)
   const animatedProgress = useSharedValue(0);
-  // Animated actual progress for percentage display (can be over 100)
+  // Animated actual progress for percentage display (can go over 100)
   const animatedActualProgress = useSharedValue(0);
+  // Scale animation for achievement pop
+  const scale = useSharedValue(1);
   const [displayPercent, setDisplayPercent] = useState(0);
+  const [hasAnimatedPop, setHasAnimatedPop] = useState(false);
   
   useEffect(() => {
-    animatedProgress.value = withTiming(progress, { 
+    // Animate progress - cap visual at 100%
+    const visualProgress = Math.min(actualProgress, 100);
+    animatedProgress.value = withTiming(visualProgress, { 
       duration: 2500, 
       easing: Easing.out(Easing.cubic) 
     });
@@ -49,20 +56,40 @@ function CircularProgress({ progress, actualProgress, size, strokeWidth }: Circu
     });
   }, [progress, actualProgress]);
 
-  // Animate the percentage text - use actualProgress directly
+  // Pop animation when hitting 100%
+  useEffect(() => {
+    if (isComplete && !hasAnimatedPop) {
+      // Delay the pop to sync with progress animation
+      const timeout = setTimeout(() => {
+        scale.value = withSpring(1.15, { damping: 8, stiffness: 400 });
+        setTimeout(() => {
+          scale.value = withSpring(1, { damping: 10, stiffness: 300 });
+        }, 200);
+      }, 2000); // Trigger near end of progress animation
+      setHasAnimatedPop(true);
+      return () => clearTimeout(timeout);
+    }
+  }, [isComplete]);
+
+  // Animate the percentage text
   useDerivedValue(() => {
     runOnJS(setDisplayPercent)(Math.round(animatedActualProgress.value));
   });
 
+  // Animated props for the progress circle
   const animatedProps = useAnimatedProps(() => {
     const strokeDashoffset = circumference - (animatedProgress.value / 100) * circumference;
     return {
       strokeDashoffset,
     };
   });
+
+  const animatedContainerStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
   
   return (
-    <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+    <Animated.View style={[{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }, animatedContainerStyle]}>
       <Svg width={size} height={size} style={{ transform: [{ rotate: '-90deg' }] }}>
         {/* White Background Track - full circle */}
         <Circle
@@ -73,7 +100,7 @@ function CircularProgress({ progress, actualProgress, size, strokeWidth }: Circu
           strokeWidth={strokeWidth}
           fill="transparent"
         />
-        {/* Animated Progress Circle */}
+        {/* Progress Circle (capped at 100% visually) */}
         <AnimatedCircle
           cx={size / 2}
           cy={size / 2}
@@ -93,7 +120,7 @@ function CircularProgress({ progress, actualProgress, size, strokeWidth }: Circu
         </Text>
         <Text style={[styles.percentageSymbol, isComplete ? styles.percentageComplete : styles.percentageIncomplete]}>%</Text>
       </View>
-    </View>
+    </Animated.View>
   );
 }
 
@@ -121,7 +148,7 @@ export default function StatsCard({ steps, goal }: StatsCardProps) {
   const displayProgress = Math.min(progress, 100); // Cap visual at 100%
 
   return (
-    <BlurView intensity={80} tint="light" style={styles.container}>
+    <BlurView intensity={120} tint="light" style={styles.container}>
       <View style={styles.contentRow}>
         {/* Left Side: Steps Info */}
         <View style={styles.leftContent}>
