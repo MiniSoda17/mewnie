@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
-import { Video, ResizeMode } from 'expo-av';
+import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 export type PetMood = 'tired' | 'neutral';
 
@@ -15,48 +16,42 @@ interface MoodMediaConfig {
 }
 
 // Define background media for each mood state
-// To use a video instead: remove imageSource and add videoSource: require('@/assets/videos/tired.mp4')
 const moodBackgrounds: Record<PetMood, MoodMediaConfig> = {
   tired: {
-    // Add your tired/sad background here:
-    // imageSource: require('@/assets/images/background-tired.png'),
-    // OR for video:
-    // videoSource: require('@/assets/videos/background-tired.mp4'),
-    videoSource: require('@/assets/videos/background-tired-vid.mp4'), // Fallback to neutral for now
+    videoSource: require('@/assets/videos/background-tired-vid.mp4'),
   },
   neutral: {
-    // Use videoSource for video files, not imageSource
     videoSource: require('@/assets/videos/background-vid.mp4'),
   },
 };
 
 interface VideoBackgroundProps {
-  /**
-   * The pet's current mood, determines which background to show.
-   * - 'tired': Shows sad/tired background (below 5000 steps)
-   * - 'neutral': Shows neutral background (5000+ steps)
-   */
   mood?: PetMood;
-  /**
-   * Optional override: Source for the video background.
-   * Can be a require('path/to/video.mp4') or { uri: 'https://...' }
-   */
   videoSource?: any;
-  /**
-   * Optional override: Source for a static image background.
-   * Can be a require('path/to/image.png') or { uri: 'https://...' }
-   * If provided, this takes precedence over videoSource.
-   */
   imageSource?: any;
 }
 
 export default function VideoBackground({ mood = 'neutral', videoSource, imageSource }: VideoBackgroundProps) {
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const opacity = useSharedValue(0);
+  
   // Get the media config for the current mood
   const moodMedia = moodBackgrounds[mood];
   
   // Priority: direct props > mood-based config
   const finalImageSource = imageSource ?? moodMedia.imageSource;
   const finalVideoSource = videoSource ?? moodMedia.videoSource;
+
+  const handleVideoLoad = (status: AVPlaybackStatus) => {
+    if (status.isLoaded) {
+      setIsVideoReady(true);
+      opacity.value = withTiming(1, { duration: 500 });
+    }
+  };
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
 
   // 1. If Image is available, render static image
   if (finalImageSource) {
@@ -71,20 +66,26 @@ export default function VideoBackground({ mood = 'neutral', videoSource, imageSo
     );
   }
 
-  // 2. Video Logic
-  // Default to a sample calming nature video if no source provided
+  // 2. Video Logic with fade-in
   const defaultVideo = { uri: 'https://videos.pexels.com/video-files/5829148/5829148-hd_1080_1920_30fps.mp4' };
   
   return (
     <View style={styles.container}>
-      <Video
-        style={styles.media}
-        source={finalVideoSource || defaultVideo}
-        resizeMode={ResizeMode.COVER}
-        isLooping
-        shouldPlay
-        isMuted={true}
-      />
+      {/* Placeholder background color while video loads */}
+      <View style={styles.placeholder} />
+      
+      <Animated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
+        <Video
+          style={styles.media}
+          source={finalVideoSource || defaultVideo}
+          resizeMode={ResizeMode.COVER}
+          isLooping
+          shouldPlay
+          isMuted={true}
+          onPlaybackStatusUpdate={handleVideoLoad}
+        />
+      </Animated.View>
+      
       {/* Overlay to ensure text readability */}
       <View style={styles.overlay} />
     </View>
@@ -95,12 +96,16 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
   },
+  placeholder: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#A8D5A2', // Light green to match your nature backgrounds
+  },
   media: {
     width: '100%',
     height: '100%',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)', // Light overlay for slight contrast
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
 });

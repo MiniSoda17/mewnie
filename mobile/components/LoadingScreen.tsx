@@ -14,8 +14,8 @@ interface LoadingScreenProps {
 
 // Assets to preload
 const assetsToPreload = [
-  require('@/assets/images/background.png'),
-  require('@/assets/images/background-tired.png'),
+  require('@/assets/videos/background-vid.mp4'),
+  require('@/assets/videos/background-tired-vid.mp4'),
   require('@/assets/images/app-logo.png'),
 ];
 
