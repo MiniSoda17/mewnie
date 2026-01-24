@@ -195,17 +195,26 @@ const styles = StyleSheet.create({
   percentageText: {
     fontFamily: 'Quicksand_700Bold',
     fontSize: 18,
-    color: '#5CB85C',
+    color: '#2E7D32', // Darker green for readability
+    textShadowColor: 'rgba(255,255,255,0.8)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 4,
   },
   percentageSymbol: {
     fontFamily: 'Quicksand_600SemiBold',
     fontSize: 11,
-    color: '#5CB85C',
+    color: '#2E7D32', // Darker green
+    textShadowColor: 'rgba(255,255,255,0.8)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 4,
   },
   percentageComplete: {
-    color: '#5CB85C',
+    color: '#2E7D32', // Darker green for readability
   },
   percentageIncomplete: {
-    color: '#DC3545',
+    color: '#B71C1C', // Darker red for readability
+    textShadowColor: 'rgba(255,255,255,0.8)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 4,
   },
 });
