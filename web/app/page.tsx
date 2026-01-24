@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+
 import FadeIn from "@/components/FadeIn";
 import HowItWorks from "@/components/HowItWorks";
 
@@ -16,13 +17,7 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 glass border-b-0 border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link href="/" className="hover:opacity-80 transition-opacity">
-            <Image 
-              src="/logo.svg" 
-              alt="Mewnie Logo" 
-              width={120} 
-              height={40} 
-              priority
-            />
+            <span className="text-xl font-bold text-white">mewnie</span>
           </Link>
           <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-300">
             <Link
@@ -46,62 +41,29 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="pt-32 pb-20">
+      <main>
         {/* Hero Section */}
-        <section className="px-6 max-w-7xl mx-auto flex flex-col items-center text-center space-y-8 py-20">
-          <FadeIn delay={0.1}>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-purple-300 mb-4">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-              </span>
-              Beta in process
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.2}>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.1]">
-              Experience the{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                magic
-              </span>{" "}
-              of mewnie.
-            </h1>
-          </FadeIn>
-
-          <FadeIn delay={0.3}>
-            <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-              Become healther using mewnie to track your fitness journey. 
-            </p>
-          </FadeIn>
-
-          <FadeIn delay={0.4}>
-            <div className="flex flex-col sm:flex-row gap-4 w-full justify-center pt-8">
-              <Link
-                href="/signup"
-                className="px-8 py-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all hover:-translate-y-1"
-              >
-                Join Waitlist
-              </Link>
-              <button className="px-8 py-4 rounded-full bg-white/5 border border-white/10 text-white font-semibold text-lg hover:bg-white/10 transition-all">
-                View Demo
-              </button>
-            </div>
-          </FadeIn>
-
-          {/* Hero Image / Placeholder */}
-          <FadeIn delay={0.6} className="w-full max-w-5xl mt-20 relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-            <div className="relative aspect-video rounded-2xl glass border border-white/10 overflow-hidden flex items-center justify-center bg-[#0a0a0a]">
-              <p className="text-gray-600 font-mono">
-                [ App Dashboard Placeholder ]
-              </p>
+        <section className="w-full relative">
+          <FadeIn delay={0.1} className="w-full">
+            <div className="relative w-full">
+              <Image
+                src="/frontpage.png"
+                alt="Mewnie Interface"
+                width={0}
+                height={0}
+                sizes="100vw"
+                className="w-full h-auto object-contain"
+                priority
+                unoptimized
+              />
             </div>
           </FadeIn>
         </section>
 
         {/* How It Works Section */}
-        <HowItWorks />
+        <div className="pt-20">
+          <HowItWorks />
+        </div>
 
         {/* Features Section */}
         <section id="features" className="py-32 px-6 max-w-7xl mx-auto">
@@ -147,6 +109,7 @@ export default function Home() {
             ))}
           </div>
         </section>
+
 
         {/* FAQ Section */}
         <section id="faq" className="py-20 px-6 max-w-3xl mx-auto">
