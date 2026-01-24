@@ -6,7 +6,7 @@ import HowItWorks from "@/components/HowItWorks";
 
 export default function Home() {
   return (
-    <div className="min-h-screen font-sans bg-background text-foreground selection:bg-accent-primary selection:text-white">
+    <div className="min-h-screen font-sans bg-[#BCECC8] text-foreground selection:bg-accent-primary selection:text-white">
       {/* Background Gradients */}
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-900/20 rounded-full blur-[120px]" />
@@ -74,9 +74,7 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <div className="pt-20">
-          <HowItWorks />
-        </div>
+        <HowItWorks />
 
         {/* Features Section */}
         <section id="features" className="py-32 px-6 max-w-7xl mx-auto">
