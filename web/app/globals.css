@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
-  --foreground: #ffffff;
+  --background: #BCECC8;
+  --foreground: #000000;
   --accent-primary: #8b5cf6; /* Violet */
   --accent-secondary: #ec4899; /* Pink */
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.2);
+  --glass-border: rgba(255, 255, 255, 0.3);
 }
 
 @theme inline {

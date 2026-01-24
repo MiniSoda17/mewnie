@@ -15,14 +15,14 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section className="py-32 px-6 relative overflow-hidden">
+    <section className="py-32 px-6 relative overflow-hidden bg-[#BCECC8]">
       <div className="max-w-7xl mx-auto">
         <FadeIn>
           <div className="text-center mb-24">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold text-black mb-6">
               Your Journey to Better Health
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+            <p className="text-gray-700 max-w-2xl mx-auto text-lg">
               Mewnie turns your daily activity into an engaging adventure.
             </p>
           </div>
@@ -64,25 +64,22 @@ export default function HowItWorks() {
               }
             ].map((item, idx) => (
               <FadeIn key={idx} delay={idx * 0.2}>
-                <div 
-                  className={`flex gap-6 p-6 rounded-2xl transition-all duration-500 border ${
-                    step === idx 
-                      ? "bg-white/10 border-purple-500/50 shadow-[0_0_30px_rgba(168,85,247,0.15)]" 
+                <div
+                  className={`flex gap-6 p-6 rounded-2xl transition-all duration-500 border ${step === idx
+                      ? "bg-black/5 border-purple-500/50 shadow-[0_0_30px_rgba(168,85,247,0.15)]"
                       : "bg-transparent border-transparent opacity-50"
-                  }`}
+                    }`}
                 >
-                  <div className={`mt-1 h-12 w-12 flex-shrink-0 rounded-full flex items-center justify-center bg-white/10 ${
-                    step === idx ? "scale-110" : ""
-                  }`}>
+                  <div className={`mt-1 h-12 w-12 flex-shrink-0 rounded-full flex items-center justify-center bg-black/5 ${step === idx ? "scale-110" : ""
+                    }`}>
                     {item.icon}
                   </div>
                   <div>
-                    <h3 className={`text-xl font-bold mb-2 transition-colors ${
-                      step === idx ? "text-white" : "text-gray-400"
-                    }`}>
+                    <h3 className={`text-xl font-bold mb-2 transition-colors ${step === idx ? "text-black" : "text-gray-500"
+                      }`}>
                       {item.title}
                     </h3>
-                    <p className="text-gray-400 leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -96,10 +93,10 @@ export default function HowItWorks() {
             <div className="relative aspect-square max-w-sm mx-auto">
               {/* Background Glow */}
               <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-pink-500/20 rounded-full blur-[60px] animate-pulse" />
-              
-              <div className="relative h-full w-full rounded-[3rem] glass border border-white/10 flex items-center justify-center overflow-hidden">
+
+              <div className="relative h-full w-full rounded-[3rem] glass border border-black/10 flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-grid-white/[0.02]" />
-                
+
                 {/* Pet Evolution Visuals */}
                 <div className="relative w-64 h-64 flex items-center justify-center">
                   {/* Stage 1: Egg */}
@@ -161,11 +158,10 @@ export default function HowItWorks() {
                 {/* Progress Indicators */}
                 <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
                   {[0, 1, 2].map((i) => (
-                    <div 
+                    <div
                       key={i}
-                      className={`h-1.5 rounded-full transition-all duration-500 ${
-                        step === i ? "w-8 bg-white" : "w-2 bg-white/20"
-                      }`}
+                      className={`h-1.5 rounded-full transition-all duration-500 ${step === i ? "w-8 bg-white" : "w-2 bg-white/20"
+                        }`}
                     />
                   ))}
                 </div>

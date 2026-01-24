@@ -14,23 +14,19 @@ export default function Home() {
       </div>
 
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 glass border-b-0 border-white/10">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#756281] border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link href="/" className="hover:opacity-80 transition-opacity">
             <span className="text-xl font-bold text-white">mewnie</span>
           </Link>
-          <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-300">
-            <Link
-              href="#features"
-              className="hover:text-white transition-colors"
-            >
-              Features
-            </Link>
-            <Link href="#faq" className="hover:text-white transition-colors">
-              FAQ
-            </Link>
-          </nav>
+
           <div className="flex items-center gap-4">
+            <Link
+              href="/signup"
+              className="px-5 py-2.5 rounded-full bg-white/10 border border-white/10 text-white text-sm font-semibold hover:bg-white/20 transition-all"
+            >
+              Join Waitlist
+            </Link>
             <Link
               href="/signup"
               className="px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-gray-200 transition-all hover:scale-105 active:scale-95"
@@ -41,7 +37,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main>
+      <main className="pt-20">
         {/* Hero Section */}
         <section className="w-full relative">
           <FadeIn delay={0.1} className="w-full">
@@ -60,6 +56,23 @@ export default function Home() {
           </FadeIn>
         </section>
 
+        {/* River Background Section */}
+        <section className="w-full relative">
+          <FadeIn delay={0} className="w-full">
+            <div className="relative w-full">
+              <Image
+                src="/secondpagenewnew.png"
+                alt="River Background"
+                width={0}
+                height={0}
+                sizes="100vw"
+                className="w-full h-auto object-contain"
+                unoptimized
+              />
+            </div>
+          </FadeIn>
+        </section>
+
         {/* How It Works Section */}
         <div className="pt-20">
           <HowItWorks />
@@ -69,10 +82,10 @@ export default function Home() {
         <section id="features" className="py-32 px-6 max-w-7xl mx-auto">
           <FadeIn>
             <div className="text-center mb-20 space-y-4">
-              <h2 className="text-3xl md:text-5xl font-bold text-white">
+              <h2 className="text-3xl md:text-5xl font-bold text-black">
                 Why Mewnie?
               </h2>
-              <p className="text-gray-400 max-w-xl mx-auto">
+              <p className="text-gray-700 max-w-xl mx-auto">
                 Everything you need to build faster and look better doing it.
               </p>
             </div>
@@ -95,15 +108,15 @@ export default function Home() {
             ].map((feature, i) => (
               <FadeIn key={i} delay={i * 0.1} fullWidth>
                 <div
-                  className="h-full p-8 rounded-2xl glass border border-white/10 hover:border-purple-500/30 transition-colors group"
+                  className="h-full p-8 rounded-2xl glass border border-black/10 hover:border-purple-500/30 transition-colors group"
                 >
                   <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <div className="h-6 w-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-md" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3">
+                  <h3 className="text-xl font-bold text-black mb-3">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-400 leading-relaxed">{feature.desc}</p>
+                  <p className="text-gray-700 leading-relaxed">{feature.desc}</p>
                 </div>
               </FadeIn>
             ))}
@@ -114,7 +127,7 @@ export default function Home() {
         {/* FAQ Section */}
         <section id="faq" className="py-20 px-6 max-w-3xl mx-auto">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-12 text-center">
               Frequently Asked Questions
             </h2>
           </FadeIn>
@@ -135,13 +148,13 @@ export default function Home() {
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <details
-                  className="group glass rounded-xl border border-white/10 overflow-hidden"
+                  className="group glass rounded-xl border border-black/10 overflow-hidden"
                 >
-                  <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-white/5 transition-colors list-none">
-                    <span className="font-medium text-lg text-white">
+                  <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-black/5 transition-colors list-none">
+                    <span className="font-medium text-lg text-black">
                       {item.q}
                     </span>
-                    <span className="text-gray-400 group-open:rotate-180 transition-transform duration-300">
+                    <span className="text-gray-600 group-open:rotate-180 transition-transform duration-300">
                       <svg
                         width="24"
                         height="24"
@@ -154,7 +167,7 @@ export default function Home() {
                       </svg>
                     </span>
                   </summary>
-                  <div className="px-6 pb-6 pt-0 text-gray-400 leading-relaxed border-t border-white/5 mt-2">
+                  <div className="px-6 pb-6 pt-0 text-gray-700 leading-relaxed border-t border-black/5 mt-2">
                     <p className="pt-4">{item.a}</p>
                   </div>
                 </details>
