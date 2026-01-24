@@ -34,13 +34,17 @@ export default function XPBar({ currentXP, maxXP, level }: XPBarProps) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     borderRadius: 20,
-    marginHorizontal: 20,
-    marginTop: 10,
     overflow: 'hidden',
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    borderColor: 'rgba(255,255,255,0.5)',
-    borderWidth: 1,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderColor: 'rgba(255,255,255,0.4)',
+    borderWidth: 1.5,
+    // Liquid glass shadow
+    shadowColor: 'rgba(255,255,255,0.5)',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
   },
   content: {
     flexDirection: 'row',

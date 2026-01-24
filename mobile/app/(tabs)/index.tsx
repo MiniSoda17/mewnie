@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '@/components/Themed';
 import VideoBackground, { PetMood } from '@/components/VideoBackground';
 import XPBar from '@/components/XPBar';
+import StreakBox from '@/components/StreakBox';
 import StatsCard from '@/components/StatsCard';
 import { useStepGoal } from '@/contexts/StepGoalContext';
 import { useDebugSteps } from '@/contexts/DebugStepsContext';
@@ -18,6 +19,9 @@ export default function HomeScreen() {
   const [currentSteps, setCurrentSteps] = useState<number>(0);
   const { stepGoal } = useStepGoal();
   const { manualSteps, isManualMode } = useDebugSteps();
+
+  // Mock streak value - in a real app this would come from a context/storage
+  const streak = 5;
 
   useEffect(() => {
     let subscription: ReturnType<typeof Pedometer.watchStepCount> | null = null;
@@ -71,9 +75,12 @@ export default function HomeScreen() {
       <VideoBackground mood={petMood} />
       
       <SafeAreaView style={styles.safeArea}>
-        {/* Top Section: XP Bar */}
+        {/* Top Section: XP Bar + Streak Box */}
         <View style={styles.topSection}>
-          <XPBar currentXP={currentXP} maxXP={XP_PER_LEVEL} level={level} />
+          <View style={styles.topRow}>
+            <XPBar currentXP={currentXP} maxXP={XP_PER_LEVEL} level={level} />
+            <StreakBox streak={streak} />
+          </View>
         </View>
 
         {/* Spacer - pushes stats to bottom */}
@@ -102,6 +109,12 @@ const styles = StyleSheet.create({
   },
   topSection: {
     paddingTop: 10,
+  },
+  topRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    gap: 10,
   },
   spacer: {
     flex: 1,
