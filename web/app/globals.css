@@ -1,10 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #BCECC8;
+  --background: #c1eeca;
   --foreground: #000000;
-  --accent-primary: #8b5cf6; /* Violet */
-  --accent-secondary: #ec4899; /* Pink */
+  --accent-primary: #8b5cf6;
+  /* Violet */
+  --accent-secondary: #ec4899;
+  /* Pink */
   --glass-bg: rgba(255, 255, 255, 0.2);
   --glass-border: rgba(255, 255, 255, 0.3);
 }
@@ -30,13 +32,16 @@ body {
 ::-webkit-scrollbar {
   width: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background: #0a0a0a;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #333;
   border-radius: 5px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

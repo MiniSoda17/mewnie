@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { motion } from "framer-motion";
 import FadeIn from "./FadeIn";
 import { useState, useEffect } from "react";
@@ -15,16 +17,18 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section className="py-32 px-6 relative overflow-hidden bg-[#BCECC8]">
+    <section className="py-32 px-6 relative overflow-hidden bg-[#c1eeca]">
       <div className="max-w-7xl mx-auto">
         <FadeIn>
           <div className="text-center mb-24">
-            <h2 className="text-3xl md:text-5xl font-bold text-black mb-6">
-              Your Journey to Better Health
-            </h2>
-            <p className="text-gray-700 max-w-2xl mx-auto text-lg">
-              Mewnie turns your daily activity into an engaging adventure.
-            </p>
+            <video
+              src="/smallmovementgreen.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="mx-auto max-w-[600px] w-full mix-blend-darken"
+            />
           </div>
         </FadeIn>
 
@@ -66,8 +70,8 @@ export default function HowItWorks() {
               <FadeIn key={idx} delay={idx * 0.2}>
                 <div
                   className={`flex gap-6 p-6 rounded-2xl transition-all duration-500 border ${step === idx
-                      ? "bg-black/5 border-purple-500/50 shadow-[0_0_30px_rgba(168,85,247,0.15)]"
-                      : "bg-transparent border-transparent opacity-50"
+                    ? "bg-black/5 border-purple-500/50 shadow-[0_0_30px_rgba(168,85,247,0.15)]"
+                    : "bg-transparent border-transparent opacity-50"
                     }`}
                 >
                   <div className={`mt-1 h-12 w-12 flex-shrink-0 rounded-full flex items-center justify-center bg-black/5 ${step === idx ? "scale-110" : ""
