@@ -6,7 +6,7 @@ import HowItWorks from "@/components/HowItWorks";
 
 export default function Home() {
   return (
-    <div className="min-h-screen font-sans bg-[#c1eeca] text-foreground selection:bg-accent-primary selection:text-white">
+    <div className="min-h-screen font-sans bg-[rgb(200,240,209)] text-foreground selection:bg-accent-primary selection:text-white">
       {/* Background Gradients */}
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-900/20 rounded-full blur-[120px]" />
@@ -71,7 +71,7 @@ export default function Home() {
               />
               <div className="absolute top-[54%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[82%] aspect-video rounded-2xl overflow-hidden">
                 <video
-                  src="/Mewnie Product Demo.mov"
+                  src="/Mewnie Product Video Actual.mov"
                   autoPlay
                   loop
                   muted

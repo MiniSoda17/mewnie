@@ -17,17 +17,20 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section className="py-32 px-6 relative overflow-hidden bg-[#c1eeca]">
+    <section className="pt-0 pb-32 px-6 relative overflow-hidden bg-[rgb(200,240,209)]">
       <div className="max-w-7xl mx-auto">
         <FadeIn>
-          <div className="text-center mb-24">
+          <div className="text-center mb-24 relative">
+            <h2 className="absolute top-20 left-0 right-0 z-10 text-3xl md:text-5xl font-bold text-[#78637f]">
+              Track your steps
+            </h2>
             <video
-              src="/smallmovementgreen.mp4"
+              src="/smallmovementgreen2.mp4"
               autoPlay
               loop
               muted
               playsInline
-              className="mx-auto max-w-[600px] w-full mix-blend-darken"
+              className="mx-auto max-w-[800px] w-full"
             />
           </div>
         </FadeIn>

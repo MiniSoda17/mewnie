@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #c1eeca;
+  --background: rgb(200, 240, 209);
   --foreground: #000000;
   --accent-primary: #8b5cf6;
   /* Violet */
