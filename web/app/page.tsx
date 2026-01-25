@@ -92,50 +92,7 @@ export default function Home() {
         {/* How It Works Section */}
         <HowItWorks />
 
-        {/* Features Section */}
-        <section id="features" className="py-32 px-6 max-w-7xl mx-auto">
-          <FadeIn>
-            <div className="text-center mb-20 space-y-4">
-              <h2 className="text-3xl md:text-5xl font-bold text-black">
-                Why Mewnie?
-              </h2>
-              <p className="text-gray-700 max-w-xl mx-auto">
-                Everything you need to build faster and look better doing it.
-              </p>
-            </div>
-          </FadeIn>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Lightning Fast",
-                desc: "Optimized for speed. Experience zero latency interactions.",
-              },
-              {
-                title: "Beautiful Design",
-                desc: "Stunning presets that make your work stand out instantly.",
-              },
-              {
-                title: "Secure & Private",
-                desc: "Your data is encrypted and safe with us. Always.",
-              },
-            ].map((feature, i) => (
-              <FadeIn key={i} delay={i * 0.1} fullWidth>
-                <div
-                  className="h-full p-8 rounded-2xl glass border border-black/10 hover:border-purple-500/30 transition-colors group"
-                >
-                  <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <div className="h-6 w-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-md" />
-                  </div>
-                  <h3 className="text-xl font-bold text-black mb-3">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">{feature.desc}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </section>
 
 
         {/* FAQ Section */}
@@ -193,17 +150,24 @@ export default function Home() {
         {/* CTA */}
         <section className="py-20 px-6">
           <FadeIn>
-            <div className="max-w-4xl mx-auto rounded-3xl relative overflow-hidden text-center py-20 px-6 border border-white/10 glass">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-900/40 to-pink-900/40 z-[-1]" />
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+            <div className="max-w-4xl mx-auto rounded-3xl relative overflow-hidden text-center py-24 px-6 shadow-2xl">
+              <Image
+                src="/sleepyforest.png"
+                alt="Sleepy Forest"
+                fill
+                className="object-cover"
+                unoptimized
+              />
+
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 relative z-10">
                 Join the evolution
               </h2>
-              <p className="text-lg text-gray-300 mb-10 max-w-lg mx-auto">
+              <p className="text-lg text-white/90 mb-10 max-w-lg mx-auto relative z-10">
                 Be among the first to experience the future of fitness tracking.
               </p>
               <Link
                 href="/signup"
-                className="px-10 py-5 rounded-full bg-white text-black font-bold text-xl hover:bg-gray-200 transition-transform hover:scale-105 inline-block"
+                className="px-10 py-5 rounded-full bg-white text-black font-bold text-xl hover:bg-gray-200 transition-transform hover:scale-105 inline-block relative z-10"
               >
                 Join Beta Waitlist
               </Link>
