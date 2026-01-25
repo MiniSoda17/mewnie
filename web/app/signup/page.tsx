@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import FadeIn from "@/components/FadeIn";
 
@@ -13,7 +14,13 @@ export default function Signup() {
         <div className="glass border border-white/10 p-8 rounded-3xl shadow-2xl">
           <div className="text-center mb-8">
             <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
-              <span className="text-xl font-bold text-white">mewnie</span>
+              <Image
+                src="/gemini logo.png"
+                alt="Gemini logo"
+                width={60}
+                height={20}
+                className="object-contain"
+              />
             </Link>
             <h2 className="text-white text-xl font-semibold mt-4">Join the Beta</h2>
             <p className="text-gray-400 text-sm mt-2">Get early access to the future of fitness.</p>

@@ -12,7 +12,7 @@ export default function HowItWorks() {
   useEffect(() => {
     const timer = setInterval(() => {
       setStep((prev) => (prev + 1) % 3);
-    }, 3000);
+    }, 2100);
     return () => clearInterval(timer);
   }, []);
 
@@ -20,10 +20,35 @@ export default function HowItWorks() {
     <section className="pt-0 pb-32 px-6 relative overflow-hidden bg-[rgb(200,240,209)]">
       <div className="max-w-7xl mx-auto">
         <FadeIn>
-          <div className="text-center mb-24 relative">
-            <h2 className="absolute top-20 left-0 right-0 z-10 text-3xl md:text-5xl font-bold text-[#78637f]">
-              Track your steps
+          <div className="flex flex-col lg:block text-center mb-0 relative">
+            <h2 className="relative lg:absolute lg:top-8 left-0 right-0 z-10 text-2xl md:text-3xl font-bold text-[#78637f] px-4 pt-12 lg:pt-0" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
+              Track your steps, convert steps to EP, coins, unlock growth, badges, skins, accessories, and backgrounds.
             </h2>
+            <div className="relative lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 z-20 mx-auto lg:mx-0 pt-20 pb-20 lg:py-0">
+              <div className="relative">
+                <Image
+                  src="/potterglasses.png"
+                  alt="Potter Glasses"
+                  width={200}
+                  height={150}
+                  className="absolute -top-16 lg:-top-20 left-1/2 -translate-x-1/2 object-contain w-[150px] lg:w-[200px] h-auto"
+                />
+                <Image
+                  src="/bar green.png"
+                  alt="Green Bar"
+                  width={400}
+                  height={900}
+                  className="object-contain w-[300px] lg:w-[400px] h-auto"
+                />
+                <Image
+                  src="/bow.png"
+                  alt="Bow"
+                  width={200}
+                  height={150}
+                  className="absolute -bottom-16 lg:-bottom-20 left-1/2 -translate-x-1/2 object-contain w-[150px] lg:w-[200px] h-auto"
+                />
+              </div>
+            </div>
             <video
               src="/smallmovementgreen2.mp4"
               autoPlay
@@ -32,6 +57,40 @@ export default function HowItWorks() {
               playsInline
               className="mx-auto max-w-[800px] w-full"
             />
+            <div className="relative lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 z-20 mx-auto lg:mx-0 pt-20 pb-20 lg:pt-0 lg:pb-0">
+              <div className="relative">
+                <Image
+                  src="/strawhat.png"
+                  alt="Straw Hat"
+                  width={200}
+                  height={150}
+                  className="absolute -top-16 lg:-top-20 left-1/2 -translate-x-1/2 object-contain w-[150px] lg:w-[200px] h-auto"
+                />
+                <Image
+                  src="/bar red.png"
+                  alt="Red Bar"
+                  width={400}
+                  height={900}
+                  className="object-contain w-[300px] lg:w-[400px] h-auto"
+                />
+                <Image
+                  src="/patrickpants.png"
+                  alt="Patrick Pants"
+                  width={200}
+                  height={150}
+                  className="absolute -bottom-16 lg:-bottom-20 left-1/2 -translate-x-1/2 object-contain w-[150px] lg:w-[200px] h-auto"
+                />
+              </div>
+            </div>
+            <div className="relative lg:absolute lg:bottom-20 left-1/2 lg:-translate-x-1/2 z-30 -mt-40 lg:mt-0 -translate-x-1/2">
+              <Image
+                src="/wings.png"
+                alt="Wings"
+                width={450}
+                height={220}
+                className="object-contain w-[350px] lg:w-[450px] h-auto mx-auto"
+              />
+            </div>
           </div>
         </FadeIn>
 
@@ -97,46 +156,50 @@ export default function HowItWorks() {
 
           {/* Visualization */}
           <FadeIn direction="left" delay={0.4}>
-            <div className="relative aspect-square max-w-sm mx-auto">
+            <div className="relative max-w-sm mx-auto">
               {/* Background Glow */}
               <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-pink-500/20 rounded-full blur-[60px] animate-pulse" />
 
-              <div className="relative h-full w-full rounded-[3rem] glass border border-black/10 flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-grid-white/[0.02]" />
+              <div className="relative h-full w-full flex items-center justify-center z-10">
 
                 {/* Pet Evolution Visuals */}
-                <div className="relative w-64 h-64 flex items-center justify-center">
-                  {/* Stage 1: Egg */}
+                <div className="relative w-80 h-[500px] flex items-center justify-center">
+                  {/* Stage 1: iPhone */}
                   <motion.div
                     initial={false}
                     animate={{
                       opacity: step === 0 ? 1 : 0,
                       scale: step === 0 ? 1 : 0.5,
                     }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.3 }}
                     className="absolute inset-0 flex items-center justify-center"
                   >
-                    <div className="w-32 h-40 border-4 border-purple-400/50 rounded-[50%] bg-purple-500/10 flex items-center justify-center shadow-[0_0_30px_rgba(168,85,247,0.2)]">
-                      <div className="w-3 h-3 bg-purple-400 rounded-full animate-ping" />
-                    </div>
+                    <Image
+                      src="/iphoneactual.png"
+                      alt="iPhone"
+                      width={300}
+                      height={420}
+                      className="object-contain"
+                    />
                   </motion.div>
 
-                  {/* Stage 2: Baby */}
+                  {/* Stage 2: Badge */}
                   <motion.div
                     initial={false}
                     animate={{
                       opacity: step === 1 ? 1 : 0,
                       scale: step === 1 ? 1 : 0.5,
                     }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.3 }}
                     className="absolute inset-0 flex items-center justify-center"
                   >
-                    <div className="w-32 h-32 rounded-3xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-[0_0_40px_rgba(236,72,153,0.3)] animate-bounce-slow">
-                      <div className="flex gap-4">
-                        <div className="w-3 h-3 bg-white rounded-full shadow-inner" />
-                        <div className="w-3 h-3 bg-white rounded-full shadow-inner" />
-                      </div>
-                    </div>
+                    <Image
+                      src="/badgecircle.png"
+                      alt="Badge"
+                      width={500}
+                      height={500}
+                      className="object-contain"
+                    />
                   </motion.div>
 
                   {/* Stage 3: Evolved */}
@@ -146,19 +209,16 @@ export default function HowItWorks() {
                       opacity: step === 2 ? 1 : 0,
                       scale: step === 2 ? 1 : 0.5,
                     }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.3 }}
                     className="absolute inset-0 flex items-center justify-center"
                   >
-                    <div className="relative">
-                      <div className="absolute -inset-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur-xl opacity-30 animate-pulse" />
-                      <div className="w-40 h-40 rounded-[2rem] bg-gradient-to-tr from-purple-600 via-pink-600 to-yellow-500 p-[2px] shadow-[0_0_60px_rgba(168,85,247,0.4)]">
-                        <div className="w-full h-full rounded-[2rem] bg-black/40 backdrop-blur-sm flex items-center justify-center">
-                          <div className="text-white text-6xl">
-                            👾
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <Image
+                      src="/adult.png"
+                      alt="Adult Mewnie"
+                      width={350}
+                      height={350}
+                      className="object-contain"
+                    />
                   </motion.div>
                 </div>
 

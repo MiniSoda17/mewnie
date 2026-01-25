@@ -17,7 +17,13 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#756281] border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link href="/" className="hover:opacity-80 transition-opacity">
-            <span className="text-xl font-bold text-white">mewnie</span>
+            <Image
+              src="/gemini logo.png"
+              alt="Gemini logo"
+              width={60}
+              height={20}
+              className="object-contain"
+            />
           </Link>
 
           <div className="flex items-center gap-4">
@@ -61,7 +67,7 @@ export default function Home() {
           <FadeIn delay={0} className="w-full">
             <div className="relative w-full">
               <Image
-                src="/secondpagefinal.png"
+                src="/secondpagefinal2.0.png"
                 alt="River Background"
                 width={0}
                 height={0}
@@ -69,7 +75,7 @@ export default function Home() {
                 className="w-full h-auto object-contain"
                 unoptimized
               />
-              <div className="absolute top-[54%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[82%] aspect-video rounded-2xl overflow-hidden">
+              <div className="absolute top-[54%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] aspect-video rounded-[3rem] overflow-hidden">
                 <video
                   src="/Mewnie Product Video Actual.mov"
                   autoPlay
