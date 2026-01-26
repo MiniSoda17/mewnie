@@ -27,12 +27,7 @@ export default function Home() {
           </Link>
 
           <div className="flex items-center gap-4">
-            <Link
-              href="/signup"
-              className="px-5 py-2.5 rounded-full bg-white/10 border border-white/10 text-white text-sm font-semibold hover:bg-white/20 transition-all"
-            >
-              Join Waitlist
-            </Link>
+
             <Link
               href="/signup"
               className="px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-gray-200 transition-all hover:scale-105 active:scale-95"

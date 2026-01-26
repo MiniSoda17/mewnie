@@ -14,8 +14,8 @@ interface DebugStepsContextType {
 const DebugStepsContext = createContext<DebugStepsContextType | undefined>(undefined);
 
 export function DebugStepsProvider({ children }: { children: ReactNode }) {
-    const [manualSteps, setManualSteps] = useState<number | null>(null);
-    const [isManualMode, setIsManualMode] = useState<boolean>(false);
+    const [manualSteps, setManualSteps] = useState<number | null>(8154);
+    const [isManualMode, setIsManualMode] = useState<boolean>(true);
 
     return (
         <DebugStepsContext.Provider 
