@@ -82,7 +82,7 @@ export default function HowItWorks() {
                 />
               </div>
             </div>
-            <div className="relative lg:absolute lg:bottom-20 left-1/2 lg:-translate-x-1/2 z-30 -mt-24 lg:mt-0 mb-12 lg:mb-0 -translate-x-1/2">
+            <div className="relative lg:absolute lg:bottom-20 left-1/2 lg:-translate-x-1/2 z-30 -mt-20 lg:mt-0 mb-12 lg:mb-0 -translate-x-1/2">
               <Image
                 src="/wings.png"
                 alt="Wings"
