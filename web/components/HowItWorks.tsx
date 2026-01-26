@@ -24,7 +24,7 @@ export default function HowItWorks() {
             <h2 className="relative lg:absolute lg:top-8 left-0 right-0 z-10 text-2xl md:text-3xl font-bold text-[#78637f] px-4 pt-12 lg:pt-0" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
               Track your steps, convert steps to EP, coins, unlock growth, badges, skins, accessories, and backgrounds.
             </h2>
-            <div className="relative lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 z-20 mx-auto lg:mx-0 pt-20 pb-20 lg:py-0">
+            <div className="relative lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 z-20 mx-auto lg:mx-0 py-4 lg:py-0 mt-24 lg:mt-0">
               <div className="relative">
                 <Image
                   src="/potterglasses.png"
@@ -45,7 +45,7 @@ export default function HowItWorks() {
                   alt="Bow"
                   width={200}
                   height={150}
-                  className="absolute -bottom-16 lg:-bottom-20 left-1/2 -translate-x-1/2 object-contain w-[150px] lg:w-[200px] h-auto"
+                  className="absolute -bottom-24 lg:-bottom-20 left-1/2 -translate-x-1/2 object-contain w-[150px] lg:w-[200px] h-auto z-10"
                 />
               </div>
             </div>
@@ -55,16 +55,16 @@ export default function HowItWorks() {
               loop
               muted
               playsInline
-              className="mx-auto max-w-[800px] w-full"
+              className="mx-auto max-w-[800px] w-full -my-12 lg:my-0 relative z-0"
             />
-            <div className="relative lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 z-20 mx-auto lg:mx-0 pt-20 pb-20 lg:pt-0 lg:pb-0">
+            <div className="relative lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 z-20 mx-auto lg:mx-0 py-4 lg:py-0 mb-24 lg:mb-0">
               <div className="relative">
                 <Image
                   src="/strawhat.png"
                   alt="Straw Hat"
                   width={200}
                   height={150}
-                  className="absolute -top-16 lg:-top-20 left-1/2 -translate-x-1/2 object-contain w-[150px] lg:w-[200px] h-auto"
+                  className="absolute -top-24 lg:-top-20 left-1/2 -translate-x-1/2 object-contain w-[150px] lg:w-[200px] h-auto z-10"
                 />
                 <Image
                   src="/bar red.png"
@@ -82,7 +82,7 @@ export default function HowItWorks() {
                 />
               </div>
             </div>
-            <div className="relative lg:absolute lg:bottom-20 left-1/2 lg:-translate-x-1/2 z-30 -mt-40 lg:mt-0 -translate-x-1/2">
+            <div className="relative lg:absolute lg:bottom-20 left-1/2 lg:-translate-x-1/2 z-30 mt-4 lg:mt-0 mb-12 lg:mb-0 -translate-x-1/2">
               <Image
                 src="/wings.png"
                 alt="Wings"
