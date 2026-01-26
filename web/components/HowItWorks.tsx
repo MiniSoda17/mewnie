@@ -22,7 +22,7 @@ export default function HowItWorks() {
         <FadeIn>
           <div className="flex flex-col lg:block text-center mb-0 relative">
             <h2 className="relative lg:absolute lg:top-8 left-0 right-0 z-10 text-2xl md:text-3xl font-bold text-[#78637f] px-4 pt-12 lg:pt-0" style={{ fontFamily: 'Gill Sans, sans-serif' }}>
-              Track your steps, convert steps to EP, coins, unlock growth, badges, skins, accessories, and backgrounds.
+              Track your steps, convert steps to points, coins, unlock growth, badges, skins, accessories, and backgrounds.
             </h2>
             <div className="relative lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 z-20 mx-auto lg:mx-0 py-4 lg:py-0 mt-24 lg:mt-0">
               <div className="relative">
