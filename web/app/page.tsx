@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import FadeIn from "@/components/FadeIn";
 import HowItWorks from "@/components/HowItWorks";
+import VideoPlayer from "@/components/VideoPlayer";
 
 export default function Home() {
   return (
@@ -68,13 +69,9 @@ export default function Home() {
                 unoptimized
               />
               <div className="absolute top-[54%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] aspect-video rounded-[3rem] overflow-hidden">
-                <video
+                <VideoPlayer
                   src="/Mewnie Product Video Actual.mov"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 />
               </div>
             </div>
@@ -105,7 +102,11 @@ export default function Home() {
               },
               {
                 q: "Can I use the app right now?",
-                a: "Unfortunately, the app is still currently in beta but you can sign up to the beta waitlist where we'll get back to you as soon as.",
+                a: "Unfortunately, the app is still currently in beta but you can sign up to the beta waitlist where you'll be the first to try the app!",
+              },
+              {
+                q: "What makes this app different from other apps?",
+                a: "Mewnie is different from other apps because it is a unique experience that allows you to collect and evolve your own Mewnies!",
               },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
