@@ -101,15 +101,15 @@ export default function Home() {
             {[
               {
                 q: "Is Mewnie free to use?",
-                a: "Yes! We offer a generous free tier for all users. You can upgrade to Pro for advanced features.",
+                a: "Yes! Completely free to use and there will be no features behind a paywall. Only cosmetics will be available for purchase.",
               },
               {
-                q: "Can I collaborate with my team?",
-                a: "Absolutely. Real-time collaboration is built into the core of Mewnie.",
+                q: "Will there be other Mewnie's I can collect?",
+                a: "Yes! We are currently developing more Mewnies in the pipeline so you can collect and evolve your favourite one!",
               },
               {
-                q: "How do I export my data?",
-                a: "You can export your projects in standard formats like PDF, PNG, or JSON at any time.",
+                q: "Can I use the app right now?",
+                a: "Unfortunately, the app is still currently in beta but you can sign up to the beta waitlist where we'll get back to you as soon as possible.",
               },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
