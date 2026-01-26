@@ -145,24 +145,25 @@ export default function Home() {
         {/* CTA */}
         <section className="py-20 px-6">
           <FadeIn>
-            <div className="max-w-4xl mx-auto rounded-3xl relative overflow-hidden text-center py-24 px-6">
+            <div className="w-full max-w-4xl mx-auto relative rounded-3xl md:rounded-[3rem] overflow-hidden isolate flex flex-col justify-center items-center text-center py-16 px-4 md:py-32 transform-gpu [backface-visibility:hidden] [will-change:transform]">
               <Image
                 src="/sleepyforest.png"
                 alt="Sleepy Forest"
                 fill
-                className="object-cover"
+                className="object-cover -z-10"
                 unoptimized
+                priority
               />
 
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 relative z-10">
+              <h2 className="text-2xl md:text-5xl font-bold text-white mb-4 md:mb-6 drop-shadow-lg">
                 Join the evolution
               </h2>
-              <p className="text-lg text-white/90 mb-10 max-w-lg mx-auto relative z-10">
+              <p className="text-base md:text-lg text-white/90 mb-8 md:mb-10 max-w-lg mx-auto drop-shadow-md">
                 Be among the first to experience the future of fitness tracking.
               </p>
               <Link
                 href="/signup"
-                className="px-10 py-5 rounded-full bg-white text-black font-bold text-xl hover:bg-gray-200 transition-transform hover:scale-105 inline-block relative z-10"
+                className="px-8 py-4 md:px-10 md:py-5 rounded-full bg-white text-black font-bold text-lg md:text-xl hover:bg-gray-100 transition-transform hover:scale-105 inline-block shadow-lg"
               >
                 Join Beta Waitlist
               </Link>
@@ -186,7 +187,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="text-gray-500 text-sm">
-            © 2024 Mewnie Inc. All rights reserved.
+            © 2026 Mewnie Inc. All rights reserved.
           </div>
         </div>
       </footer>
