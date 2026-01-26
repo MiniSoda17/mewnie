@@ -145,7 +145,7 @@ export default function Home() {
         {/* CTA */}
         <section className="py-20 px-6">
           <FadeIn>
-            <div className="max-w-4xl mx-auto rounded-3xl relative overflow-hidden text-center py-24 px-6 shadow-2xl">
+            <div className="max-w-4xl mx-auto rounded-3xl relative overflow-hidden text-center py-24 px-6">
               <Image
                 src="/sleepyforest.png"
                 alt="Sleepy Forest"
