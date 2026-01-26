@@ -151,7 +151,7 @@ export default function Home() {
               />
               <FadeIn>
                 <h2 className="text-2xl md:text-5xl font-bold text-white mb-4 md:mb-6 drop-shadow-lg">
-                  Join the evolution
+                  Join Mewnie Today
                 </h2>
               </FadeIn>
               
@@ -171,13 +171,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-xl font-bold text-white">mewnie</div>
           <div className="flex gap-6 text-gray-400 text-sm">
-            <Link href="#" className="hover:text-white transition-colors">
+            <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="hover:text-white transition-colors">
+            <Link href="/terms" className="hover:text-white transition-colors">
               Terms of Service
             </Link>
-            <Link href="#" className="hover:text-white transition-colors">
+            <Link href="/contact" className="hover:text-white transition-colors">
               Contact
             </Link>
           </div>
