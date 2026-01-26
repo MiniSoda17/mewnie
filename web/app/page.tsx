@@ -44,7 +44,7 @@ export default function Home() {
           <FadeIn delay={0.1} className="w-full">
             <div className="relative w-full">
               <Image
-                src="/frontpageclear.png"
+                src="/frontpage.png"
                 alt="Mewnie Interface"
                 width={0}
                 height={0}
