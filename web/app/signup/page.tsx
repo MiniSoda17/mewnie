@@ -15,25 +15,25 @@ export default function Signup() {
           <div className="text-center mb-8">
             <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
               <Image
-                src="/gemini logo.png"
-                alt="Gemini logo"
-                width={60}
-                height={20}
+                src="/mewnielogotransparent.png"
+                alt="Mewnie logo"
+                width={80}
+                height={80}
                 className="object-contain"
               />
             </Link>
-            <h2 className="text-white text-xl font-semibold mt-4">Join the Beta</h2>
-            <p className="text-gray-400 text-sm mt-2">Get early access to the future of fitness.</p>
+            <h2 className="text-gray-900 text-xl font-semibold mt-4">Join the Beta</h2>
+            <p className="text-gray-600 text-sm mt-2">Get early access to the future of fitness.</p>
           </div>
 
           <form className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
               <input
                 type="email"
                 id="email"
                 placeholder="you@example.com"
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all"
+                className="w-full bg-white/50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all"
               />
             </div>
 
@@ -46,7 +46,7 @@ export default function Signup() {
           </form>
 
           <div className="text-center mt-6">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-600">
               Limited spots available.
             </p>
           </div>
