@@ -44,7 +44,7 @@ export default function Home() {
           <FadeIn delay={0.1} className="w-full">
             <div className="relative w-full">
               <Image
-                src="/frontpage.png"
+                src="/frontpageclear.png"
                 alt="Mewnie Interface"
                 width={0}
                 height={0}
@@ -109,7 +109,7 @@ export default function Home() {
               },
               {
                 q: "Can I use the app right now?",
-                a: "Unfortunately, the app is still currently in beta but you can sign up to the beta waitlist where we'll get back to you as soon as possible.",
+                a: "Unfortunately, the app is still currently in beta but you can sign up to the beta waitlist where we'll get back to you as soon as.",
               },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
