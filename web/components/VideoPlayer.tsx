@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface VideoPlayerProps {
   src: string;
@@ -13,6 +13,35 @@ export default function VideoPlayer({ src, className }: VideoPlayerProps) {
   const [volume, setVolume] = useState(1);
   const [showVolume, setShowVolume] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (videoRef.current) {
+          if (entry.isIntersecting) {
+            videoRef.current.play().catch(() => {
+              // Autoplay might be blocked if not muted/interacted
+            });
+            setIsPlaying(true);
+          } else {
+            videoRef.current.pause();
+            setIsPlaying(false);
+          }
+        }
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const togglePlay = () => {
     if (videoRef.current) {
