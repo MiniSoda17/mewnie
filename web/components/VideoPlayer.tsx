@@ -9,9 +9,21 @@ interface VideoPlayerProps {
 
 export default function VideoPlayer({ src, className }: VideoPlayerProps) {
   const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [volume, setVolume] = useState(1);
   const [showVolume, setShowVolume] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -56,6 +68,45 @@ export default function VideoPlayer({ src, className }: VideoPlayerProps) {
         onMouseEnter={() => setShowVolume(true)}
         onMouseLeave={() => setShowVolume(false)}
       >
+        <button
+          onClick={togglePlay}
+          className="hover:scale-110 transition-transform text-white mr-1"
+          aria-label={isPlaying ? "Pause" : "Play"}
+        >
+          {isPlaying ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="6" y="4" width="4" height="16" />
+              <rect x="14" y="4" width="4" height="16" />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+          )}
+        </button>
+
+        <div className={`h-4 w-[1px] bg-white/20`} />
+
         <div className={`overflow-hidden transition-all duration-300 ${showVolume ? 'w-24 opacity-100' : 'w-0 opacity-0'}`}>
           <input
             type="range"
