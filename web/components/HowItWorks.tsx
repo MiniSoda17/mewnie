@@ -177,8 +177,8 @@ export default function HowItWorks() {
                     <Image
                       src="/iphoneactual.png"
                       alt="iPhone"
-                      width={300}
-                      height={420}
+                      width={230}
+                      height={320}
                       className="object-contain"
                     />
                   </motion.div>

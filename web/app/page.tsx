@@ -161,7 +161,7 @@ export default function Home() {
                   href="/signup"
                   className="px-8 py-4 mb-30 md:px-10 md:py-5 rounded-full bg-white text-black font-bold text-lg md:text-xl hover:bg-gray-100 transition-transform hover:scale-105 inline-block shadow-lg"
                 >
-                  Join Beta Waitlist
+                  Join Beta
                 </Link>
               </FadeIn>
             </div>
